@@ -552,26 +552,33 @@
     });
 
     // Função para o carrossel com deslize (swipe)
-    const stage = document.querySelector('.stage');
+    const panel = document.getElementById('panel');
     let touchStartX = 0;
     let touchEndX = 0;
+    let isSwiping = false;
 
-    stage.addEventListener('touchstart', (e) => {
+    panel.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
+        isSwiping = true;
     });
 
-    stage.addEventListener('touchend', (e) => {
+    panel.addEventListener('touchend', (e) => {
+        if (!isSwiping) return;
         touchEndX = e.changedTouches[0].clientX;
         handleSwipe();
+        isSwiping = false;
     });
 
-    stage.addEventListener('mousedown', (e) => {
+    panel.addEventListener('mousedown', (e) => {
         touchStartX = e.clientX;
+        isSwiping = true;
     });
 
-    stage.addEventListener('mouseup', (e) => {
+    panel.addEventListener('mouseup', (e) => {
+        if (!isSwiping) return;
         touchEndX = e.clientX;
         handleSwipe();
+        isSwiping = false;
     });
 
     function handleSwipe() {
