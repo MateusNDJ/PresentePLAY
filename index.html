@@ -131,6 +131,45 @@
             pointer-events: none;
         }
 
+        /* Estilo para corações criados com CSS */
+        .photo-frame.heart {
+            background: none;
+            overflow: visible;
+            width: auto;
+            height: auto;
+            border: none;
+            cursor: pointer;
+        }
+
+        .photo-frame.heart .heart-shape {
+            position: relative;
+            width: 100px;
+            height: 90px;
+            background-color: #ff5277;
+            transform: rotate(-45deg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo-frame.heart .heart-shape::before,
+        .photo-frame.heart .heart-shape::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 90px;
+            background-color: #ff5277;
+            border-radius: 50%;
+        }
+
+        .photo-frame.heart .heart-shape::before {
+            top: -50px;
+            left: 0;
+        }
+
+        .photo-frame.heart .heart-shape::after {
+            left: 50px;
+            top: 0;
+        }
+
         @keyframes float {
             0% { transform: translateY(0px) rotate(var(--initial-rotation, 0deg)); }
             50% { transform: translateY(-15px) rotate(calc(var(--initial-rotation, 0deg) + var(--float-rotation, 2deg))); }
@@ -177,12 +216,13 @@
             opacity: 1;
         }
 
-        /* Efeito de corações caindo (novos estilos para mais corações) */
+        /* Efeito de corações caindo (criado por JS) */
         .falling-heart {
             position: absolute;
             transform: rotate(45deg);
             animation: fall linear infinite;
             z-index: 0;
+            pointer-events: none;
         }
 
         .falling-heart::before, .falling-heart::after {
@@ -191,48 +231,47 @@
             border-radius: 50%;
         }
 
-        /* Variações de tamanho e cor */
-        .heart-small {
-            width: 20px;
-            height: 20px;
+        .falling-heart.small {
+            width: 15px;
+            height: 15px;
             background-color: #f7c6d1;
             opacity: 0.6;
         }
-        .heart-small::before, .heart-small::after {
-            width: 20px;
-            height: 20px;
+        .falling-heart.small::before, .falling-heart.small::after {
+            width: 15px;
+            height: 15px;
             background-color: #f7c6d1;
         }
-        .heart-small::before { top: -10px; left: 0; }
-        .heart-small::after { top: 0; left: -10px; }
+        .falling-heart.small::before { top: -7.5px; left: 0; }
+        .falling-heart.small::after { top: 0; left: -7.5px; }
 
-        .heart-medium {
-            width: 30px;
-            height: 30px;
-            background-color: #f7c6d1;
+        .falling-heart.medium {
+            width: 25px;
+            height: 25px;
+            background-color: #ff5277;
             opacity: 0.8;
         }
-        .heart-medium::before, .heart-medium::after {
-            width: 30px;
-            height: 30px;
-            background-color: #f7c6d1;
+        .falling-heart.medium::before, .falling-heart.medium::after {
+            width: 25px;
+            height: 25px;
+            background-color: #ff5277;
         }
-        .heart-medium::before { top: -15px; left: 0; }
-        .heart-medium::after { top: 0; left: -15px; }
+        .falling-heart.medium::before { top: -12.5px; left: 0; }
+        .falling-heart.medium::after { top: 0; left: -12.5px; }
 
-        .heart-large {
-            width: 40px;
-            height: 40px;
-            background-color: #f7c6d1;
+        .falling-heart.large {
+            width: 35px;
+            height: 35px;
+            background-color: #e94966;
             opacity: 0.9;
         }
-        .heart-large::before, .heart-large::after {
-            width: 40px;
-            height: 40px;
-            background-color: #f7c6d1;
+        .falling-heart.large::before, .falling-heart.large::after {
+            width: 35px;
+            height: 35px;
+            background-color: #e94966;
         }
-        .heart-large::before { top: -20px; left: 0; }
-        .heart-large::after { top: 0; left: -20px; }
+        .falling-heart.large::before { top: -17.5px; left: 0; }
+        .falling-heart.large::after { top: 0; left: -17.5px; }
 
         @keyframes fall {
             0% {
@@ -268,6 +307,18 @@
                 height: 80px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             }
+
+            .photo-frame.heart .heart-shape {
+                width: 60px;
+                height: 54px;
+            }
+            .photo-frame.heart .heart-shape::before,
+            .photo-frame.heart .heart-shape::after {
+                width: 60px;
+                height: 54px;
+            }
+            .photo-frame.heart .heart-shape::before { top: -30px; left: 0; }
+            .photo-frame.heart .heart-shape::after { left: 30px; top: 0; }
         }
     </style>
 </head>
@@ -290,8 +341,8 @@
     </div>
 </div>
 
-<div class="photo-frame" id="mainHeart1" style="bottom: 15%; left: 25%; width: 135px; height: 135px; --initial-rotation: -6deg; --float-rotation: -1deg; animation-delay: 2s;"><img src="img/heart.png"></div>
-<div class="photo-frame" id="mainHeart2" style="bottom: 10%; right: 12%; width: 120px; height: 120px; --initial-rotation: 7deg; --float-rotation: -1deg; animation-delay: 4s;"><img src="img/heart.png"></div>
+<div class="photo-frame heart" id="mainHeart1" style="bottom: 15%; left: 25%; --initial-rotation: -6deg; --float-rotation: -1deg; animation-delay: 2s;"><div class="heart-shape"></div></div>
+<div class="photo-frame heart" id="mainHeart2" style="bottom: 10%; right: 12%; --initial-rotation: 7deg; --float-rotation: -1deg; animation-delay: 4s;"><div class="heart-shape"></div></div>
 
 <div class="photo-frame" style="top: 10%; left: 5%; width: 140px; height: 140px; --initial-rotation: -10deg; --float-rotation: 2deg;"><img src="img/1.png"></div>
 <div class="photo-frame" style="top: 20%; right: 5%; width: 150px; height: 150px; --initial-rotation: 5deg; --float-rotation: -2deg; animation-delay: 1s;"><img src="img/2.png"></div>
@@ -307,21 +358,6 @@
 <div class="photo-frame" style="top: 5%; right: 20%; width: 110px; height: 110px; --initial-rotation: 4deg; --float-rotation: -3deg; animation-delay: 13s;"><img src="img/2.png"></div>
 <div class="photo-frame" style="bottom: 30%; left: 70%; width: 140px; height: 140px; --initial-rotation: 12deg; --float-rotation: -2deg; animation-delay: 14s;"><img src="img/3.png"></div>
 
-<div class="falling-heart heart-small" style="left: 5%; animation-duration: 9s; animation-delay: 0s;"></div>
-<div class="falling-heart heart-medium" style="left: 15%; animation-duration: 12s; animation-delay: 2s;"></div>
-<div class="falling-heart heart-large" style="left: 25%; animation-duration: 15s; animation-delay: 4s;"></div>
-<div class="falling-heart heart-small" style="left: 35%; animation-duration: 10s; animation-delay: 6s;"></div>
-<div class="falling-heart heart-medium" style="left: 45%; animation-duration: 13s; animation-delay: 8s;"></div>
-<div class="falling-heart heart-large" style="left: 55%; animation-duration: 16s; animation-delay: 10s;"></div>
-<div class="falling-heart heart-small" style="left: 65%; animation-duration: 11s; animation-delay: 12s;"></div>
-<div class="falling-heart heart-medium" style="left: 75%; animation-duration: 14s; animation-delay: 14s;"></div>
-<div class="falling-heart heart-large" style="left: 85%; animation-duration: 17s; animation-delay: 16s;"></div>
-<div class="falling-heart heart-small" style="left: 95%; animation-duration: 9s; animation-delay: 1s;"></div>
-<div class="falling-heart heart-large" style="left: 40%; animation-duration: 18s; animation-delay: 5s;"></div>
-<div class="falling-heart heart-medium" style="left: 80%; animation-duration: 13s; animation-delay: 7s;"></div>
-<div class="falling-heart heart-small" style="left: 20%; animation-duration: 10s; animation-delay: 3s;"></div>
-<div class="falling-heart heart-large" style="left: 60%; animation-duration: 14s; animation-delay: 9s;"></div>
-<div class="falling-heart heart-small" style="left: 30%; animation-duration: 11s; animation-delay: 11s;"></div>
 
 <script>
     const vibes = [
@@ -497,6 +533,33 @@
             document.removeEventListener('touchend', stopDrag);
         }
     });
+
+    // Script para gerar corações caindo de forma aleatória
+    const stage = document.querySelector('.stage');
+
+    function createFallingHeart() {
+        const heart = document.createElement('div');
+        const sizes = ['small', 'medium', 'large'];
+        const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+        const randomLeft = Math.random() * 100;
+        const randomDuration = Math.random() * 10 + 5; // 5 a 15 segundos
+        const randomDelay = Math.random() * 5; // 0 a 5 segundos
+
+        heart.classList.add('falling-heart', randomSize);
+        heart.style.left = `${randomLeft}vw`;
+        heart.style.animationDuration = `${randomDuration}s`;
+        heart.style.animationDelay = `${randomDelay}s`;
+
+        stage.appendChild(heart);
+
+        // Remove o coração da tela quando a animação terminar
+        heart.addEventListener('animationend', () => {
+            heart.remove();
+        });
+    }
+
+    // Gerar um novo coração a cada 0.5 segundos
+    setInterval(createFallingHeart, 500);
 </script>
 </body>
 </html>
