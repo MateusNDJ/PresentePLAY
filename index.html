@@ -3,76 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Playlist para Minha Lindona</title>
+<title>Playlist Especial</title>
 <style>
-  body {
-    background-color: #2b0000;
-    color: #fff;
-    font-family: 'Georgia', serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  .album-art {
-    margin-top: 30px;
-  }
-  .album-art img {
-    width: 250px;
-    border: 3px solid #5c2c2c;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  }
-  .now-playing {
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #5c2c2c;
-    border-radius: 20px;
-    display: inline-block;
-    font-style: italic;
-  }
-  .playlist-title {
-    margin-top: 10px;
-    font-size: 1.2em;
-    letter-spacing: 4px;
-    color: #d4bfbf;
-  }
-  .authentic-note {
-    margin-top: 25px;
-    font-size: 1.1em;
-    color: #ffdddd;
-    font-style: italic;
-  }
-  iframe {
-    margin-top: 30px;
-    width: 560px;
-    height: 315px;
-    border: none;
-  }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #121212;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .container {
+        max-width: 800px;
+        width: 100%;
+        padding: 20px;
+    }
+    .slideshow-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+    .slide {
+        display: none;
+        text-align: center;
+    }
+    .slide.active {
+        display: block;
+    }
+    .responsive-iframe {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* Proporção 16:9 */
+        height: 0;
+    }
+    .responsive-iframe iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    .lyrics {
+        margin-top: 15px;
+        font-size: 1.1em;
+        line-height: 1.5em;
+        text-align: center;
+    }
+    .controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+    .controls button {
+        background: #1db954;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+    .controls button:hover {
+        background: #1ed760;
+    }
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="album-art">
-      <img src="cf05f049-3122-46e0-90bb-6ee9b5a2b054.png" alt="Capa do Álbum">
+<div class="container">
+    <h1>Playlist Especial para Minha Lindona</h1>
+    <div class="slideshow-container" id="slideshow">
+        <!-- Slides serão inseridos aqui -->
     </div>
-    <div class="now-playing">
-      Now Playing: There She Goes - The La's
+    <div class="lyrics" id="lyrics"></div>
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Próxima</button>
     </div>
-    <div class="playlist-title">
-      a l e x i i a s b e d r o o m
-    </div>
-    <div class="authentic-note">
-      Para minha lindona: Sua autenticidade ilumina tudo ao seu redor. Nunca perca essa essência única que te faz ser quem você é. ❤️
-    </div>
-    <iframe src="https://www.youtube.com/embed/m8kPN8e1RFk?si=syki1W02ZFoTxEEj" 
-            title="YouTube video player" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen>
-    </iframe>
-  </div>
+</div>
+
+<script>
+const vibes = [
+    {
+        title: "You're Living in a 90's Romcom",
+        lyrics: [
+            "A música que abre caminhos.",
+            "Deixa a vida tocar suavemente.",
+            "Primeiro passo de uma trilha especial."
+        ],
+        iframeHTML: '<div class="responsive-iframe"><iframe src="https://www.youtube.com/embed/m8kPN8e1RFk?si=syki1W02ZFoTxEEj" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>'
+    },
+    {
+        title: "Autenticidade",
+        lyrics: [
+            "Ela é autêntica e única.",
+            "Brilha sem precisar imitar.",
+            "A beleza de ser você mesma."
+        ],
+        iframeHTML: '<div class="responsive-iframe"><iframe src="https://www.youtube.com/embed/pxrNYPc0GmQ?si=Pd0wzhbwYEbSeng4" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>'
+    },
+    {
+        title: "Conexão",
+        lyrics: [
+            "Uma canção que conecta corações.",
+            "Pequenos gestos, grandes histórias.",
+            "O som que aproxima."
+        ],
+        iframeHTML: '<div class="responsive-iframe"><iframe src="https://www.youtube.com/embed/qXu-jA2MNJA?si=LU4xWKlE1aLSyNZe" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>'
+    }
+];
+
+let currentSlide = 0;
+
+function renderSlides() {
+    const container = document.getElementById('slideshow');
+    container.innerHTML = '';
+    vibes.forEach((vibe, index) => {
+        const slide = document.createElement('div');
+        slide.classList.add('slide');
+        if (index === currentSlide) slide.classList.add('active');
+        slide.innerHTML = vibe.iframeHTML;
+        container.appendChild(slide);
+    });
+    updateLyrics();
+}
+
+function updateLyrics() {
+    const lyricsContainer = document.getElementById('lyrics');
+    const lines = vibes[currentSlide].lyrics;
+    lyricsContainer.textContent = lines[Math.floor(Math.random() * lines.length)];
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % vibes.length;
+    renderSlides();
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + vibes.length) % vibes.length;
+    renderSlides();
+}
+
+renderSlides();
+</script>
 </body>
 </html>
