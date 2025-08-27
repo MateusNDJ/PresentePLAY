@@ -155,7 +155,6 @@
             border: none;
         }
 
-        /* Novo painel de mensagem */
         .message-panel {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -178,36 +177,62 @@
             opacity: 1;
         }
 
-        /* Efeito de corações caindo */
+        /* Efeito de corações caindo (novos estilos para mais corações) */
         .falling-heart {
             position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: #f7c6d1;
             transform: rotate(45deg);
             animation: fall linear infinite;
             z-index: 0;
-            opacity: 0.8;
         }
 
         .falling-heart::before, .falling-heart::after {
             content: "";
             position: absolute;
-            width: 30px;
-            height: 30px;
             border-radius: 50%;
+        }
+
+        /* Variações de tamanho e cor */
+        .heart-small {
+            width: 20px;
+            height: 20px;
+            background-color: #f7c6d1;
+            opacity: 0.6;
+        }
+        .heart-small::before, .heart-small::after {
+            width: 20px;
+            height: 20px;
             background-color: #f7c6d1;
         }
+        .heart-small::before { top: -10px; left: 0; }
+        .heart-small::after { top: 0; left: -10px; }
 
-        .falling-heart::before {
-            top: -15px;
-            left: 0;
+        .heart-medium {
+            width: 30px;
+            height: 30px;
+            background-color: #f7c6d1;
+            opacity: 0.8;
         }
+        .heart-medium::before, .heart-medium::after {
+            width: 30px;
+            height: 30px;
+            background-color: #f7c6d1;
+        }
+        .heart-medium::before { top: -15px; left: 0; }
+        .heart-medium::after { top: 0; left: -15px; }
 
-        .falling-heart::after {
-            top: 0;
-            left: -15px;
+        .heart-large {
+            width: 40px;
+            height: 40px;
+            background-color: #f7c6d1;
+            opacity: 0.9;
         }
+        .heart-large::before, .heart-large::after {
+            width: 40px;
+            height: 40px;
+            background-color: #f7c6d1;
+        }
+        .heart-large::before { top: -20px; left: 0; }
+        .heart-large::after { top: 0; left: -20px; }
 
         @keyframes fall {
             0% {
@@ -220,7 +245,6 @@
             }
         }
 
-        /* MEDIA QUERIES PARA RESPONSIVIDADE EM CELULARES */
         @media (max-width: 768px) {
             .center-panel {
                 width: 90%;
@@ -283,12 +307,21 @@
 <div class="photo-frame" style="top: 5%; right: 20%; width: 110px; height: 110px; --initial-rotation: 4deg; --float-rotation: -3deg; animation-delay: 13s;"><img src="img/2.png"></div>
 <div class="photo-frame" style="bottom: 30%; left: 70%; width: 140px; height: 140px; --initial-rotation: 12deg; --float-rotation: -2deg; animation-delay: 14s;"><img src="img/3.png"></div>
 
-<div class="falling-heart" style="left: 10%; animation-duration: 10s;"></div>
-<div class="falling-heart" style="left: 30%; animation-duration: 15s; animation-delay: 2s;"></div>
-<div class="falling-heart" style="left: 50%; animation-duration: 8s; animation-delay: 4s;"></div>
-<div class="falling-heart" style="left: 70%; animation-duration: 12s;"></div>
-<div class="falling-heart" style="left: 90%; animation-duration: 9s; animation-delay: 3s;"></div>
-
+<div class="falling-heart heart-small" style="left: 5%; animation-duration: 9s; animation-delay: 0s;"></div>
+<div class="falling-heart heart-medium" style="left: 15%; animation-duration: 12s; animation-delay: 2s;"></div>
+<div class="falling-heart heart-large" style="left: 25%; animation-duration: 15s; animation-delay: 4s;"></div>
+<div class="falling-heart heart-small" style="left: 35%; animation-duration: 10s; animation-delay: 6s;"></div>
+<div class="falling-heart heart-medium" style="left: 45%; animation-duration: 13s; animation-delay: 8s;"></div>
+<div class="falling-heart heart-large" style="left: 55%; animation-duration: 16s; animation-delay: 10s;"></div>
+<div class="falling-heart heart-small" style="left: 65%; animation-duration: 11s; animation-delay: 12s;"></div>
+<div class="falling-heart heart-medium" style="left: 75%; animation-duration: 14s; animation-delay: 14s;"></div>
+<div class="falling-heart heart-large" style="left: 85%; animation-duration: 17s; animation-delay: 16s;"></div>
+<div class="falling-heart heart-small" style="left: 95%; animation-duration: 9s; animation-delay: 1s;"></div>
+<div class="falling-heart heart-large" style="left: 40%; animation-duration: 18s; animation-delay: 5s;"></div>
+<div class="falling-heart heart-medium" style="left: 80%; animation-duration: 13s; animation-delay: 7s;"></div>
+<div class="falling-heart heart-small" style="left: 20%; animation-duration: 10s; animation-delay: 3s;"></div>
+<div class="falling-heart heart-large" style="left: 60%; animation-duration: 14s; animation-delay: 9s;"></div>
+<div class="falling-heart heart-small" style="left: 30%; animation-duration: 11s; animation-delay: 11s;"></div>
 
 <script>
     const vibes = [
@@ -319,7 +352,6 @@
             ],
             iframeHTML: '<iframe src="https://www.youtube.com/embed/qXu-jA2MNJA?si=LU4xWKlE1aLSyNZe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
         },
-        // Adicione um item vazio no final para mostrar a mensagem
         {
             title: "",
             lyrics: [""],
@@ -344,7 +376,6 @@
             clearInterval(autoChangeInterval);
         }
 
-        // Se for o último item da playlist, mostra o painel de mensagem
         if (idx >= vibes.length - 1) {
             mainPanel.style.display = 'none';
             messagePanel.style.display = 'block';
@@ -401,7 +432,6 @@
         setVibe(current);
     });
 
-    // Eventos para os corações clicáveis
     document.getElementById('mainHeart1').addEventListener('click', () => {
         alert("Este coração simboliza meu amor por você!");
     });
@@ -412,7 +442,6 @@
 
     setVibe(current);
     
-    // Funcionalidade de arrastar as fotos
     const photoFrames = document.querySelectorAll('.photo-frame');
 
     photoFrames.forEach(frame => {
