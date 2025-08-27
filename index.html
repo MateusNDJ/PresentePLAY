@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Playlist de Coração</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg1: #fffaf8;
+            --accent: #f7c6d1;
+            --accent-2: #c7d9c4;
+            --muted: #6b6b6b;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        body {
+            /* Background image and its properties */
+            background-image: url('background.png'); /* 🖼️ CHANGE THIS LINE 🖼️ */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .stage {
+            position: relative;
+            z-index: 5;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .center-panel {
+            position: relative;
+            z-index: 10;
+            width: 60%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .center-panel h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .lyrics {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlighted-lyric {
+            color: var(--accent);
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 12;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08));
+            display: grid;
+            place-items: center;
+            border-radius: 999px;
+            font-size: 30px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* New style for the icon */
+        .nav-arrow i {
+            color: white;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-left { left: 20px; }
+        .nav-right { right: 20px; }
+
+        .photo-frame {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: float 8s ease-in-out infinite alternate;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        #ytPlayerContainer iframe {
+            width: 100%;
+            height: 350px;
+            border: none;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="stage">
+    <div class="nav-arrow nav-left" id="prevBtn"><i class="fas fa-chevron-left"></i></div>
+    <div class="nav-arrow nav-right" id="nextBtn"><i class="fas fa-chevron-right"></i></div>
+    <div class="center-panel" id="panel">
+        <h1 id="songTitle">Lover, You Should've Come Over</h1>
+        <div id="ytPlayerContainer"></div>
+        <div class="lyrics" id="lyrics"></div>
+    </div>
+</div>
+
+<div class="photo-frame" style="top: 10%; left: 5%; animation-delay: 0s;"><img src="/img/9.png" alt="Jeff Buckley photo 1"></div>
+<div class="photo-frame" style="top: 20%; right: 5%; animation-delay: 1.5s;"><img src="/img/1.png" alt="Jeff Buckley photo 2"></div>
+<div class="photo-frame" style="bottom: 15%; left: 10%; animation-delay: 3s;"><img src="/img/10.png" alt="Jeff Buckley photo 3"></div>
+<div class="photo-frame" style="bottom: 10%; right: 12%; animation-delay: 4.5s;"><img src="/img/2.png" alt="Jeff Buckley photo 4"></div>
+<div class="photo-frame" style="top: 50%; left: 20%; animation-delay: 6s;"><img src="/img/3.png" alt="Jeff Buckley photo 5"></div>
+<div class="photo-frame" style="bottom: 25%; right: 35%; animation-delay: 2s;"><img src="/img/4.png" alt="Jeff Buckley photo 6"></div>
+<div class="photo-frame" style="top: 35%; right: 25%; animation-delay: 5.5s;"><img src="/img/5.png" alt="Jeff Buckley photo 7"></div>
+<div class="photo-frame" style="bottom: 5%; left: 50%; animation-delay: 7s;"><img src="/img/6.png" alt="Jeff Buckley photo 8"></div>
+<div class="photo-frame" style="top: 15%; left: 70%; animation-delay: 1s;"><img src="/img/7.png" alt="Jeff Buckley photo 9"></div>
+<div class="photo-frame" style="bottom: 40%; left: 5%; animation-delay: 2.5s;"><img src="/img/8.png" alt="Jeff Buckley photo 10"></div>
+
+<script>
+    const vibes = [
+        {
+            title: "Lover, You Should've Come Over",
+            lyrics: [
+                "Lover, you should've come over",
+                "And I can't touch what I want",
+                "I'm afraid to love, I'm afraid to love"
+            ],
+            iframeHTML: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/6Jv7kjGkhY2fT4yuBF3aTz?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
+        },
+        {
+            title: "Grace",
+            lyrics: [
+                "And I feel my heart is breaking",
+                "It's the only thing that's real",
+                "I wait for you"
+            ],
+            iframeHTML: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/64SIlhd3BaHCCMSfajXG7l?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
+        },
+        {
+            title: "Hallelujah",
+            lyrics: [
+                "Well, I've heard there was a secret chord",
+                "That David played, and it pleased the Lord",
+                "The baffled king composing Hallelujah"
+            ],
+            iframeHTML: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/3pRaLNL3b8x5uBOcsgvdqM?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
+        }
+    ];
+
+    let current = 0;
+    const titleEl = document.getElementById("songTitle");
+    const lyricsEl = document.getElementById("lyrics");
+    const ytPlayerContainer = document.getElementById("ytPlayerContainer");
+    let karaokeInterval;
+    let currentLyricIndex = 0;
+
+    function setVibe(idx) {
+        if (karaokeInterval) {
+            clearInterval(karaokeInterval);
+        }
+        
+        const v = vibes[idx];
+        titleEl.textContent = v.title;
+        ytPlayerContainer.innerHTML = v.iframeHTML;
+
+        currentLyricIndex = 0;
+        lyricsEl.textContent = "";
+        
+        const lyricLines = v.lyrics.map(line => `<span class="lyric-line">${line}</span>`).join('<br>');
+        lyricsEl.innerHTML = lyricLines;
+        
+        const lines = lyricsEl.querySelectorAll('.lyric-line');
+        
+        karaokeInterval = setInterval(() => {
+            if (currentLyricIndex < lines.length) {
+                if (currentLyricIndex > 0) {
+                    lines[currentLyricIndex - 1].classList.remove('highlighted-lyric');
+                }
+                lines[currentLyricIndex].classList.add('highlighted-lyric');
+                currentLyricIndex++;
+            } else {
+                lines[lines.length - 1].classList.remove('highlighted-lyric');
+                currentLyricIndex = 0;
+            }
+        }, 5000);
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+        current = (current + vibes.length - 1) % vibes.length;
+        setVibe(current);
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        current = (current + 1) % vibes.length;
+        setVibe(current);
+    });
+
+    setVibe(current);
+</script>
+</body>
+</html>
