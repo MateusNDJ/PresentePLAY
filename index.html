@@ -49,6 +49,12 @@
             text-align: center;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
             box-sizing: border-box;
+            transition: opacity 1s ease-in-out;
+            opacity: 1;
+        }
+
+        .center-panel.fade-out {
+            opacity: 0;
         }
 
         .center-panel h1 {
@@ -276,6 +282,12 @@
         @keyframes fall {
             0% {
                 transform: translateY(-10vh) rotate(45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
                 opacity: 1;
             }
             100% {
@@ -336,7 +348,9 @@
     
     <div class="message-panel" id="messagePanel">
         <p>
-            "O maior presente que a vida me deu é ter você. Este lugar, esta música, é a nossa canção, o nosso refúgio. É o que eu sinto, e queria que você soubesse."
+            "I thought that I was dreaming when you said you loved me.
+            The air was so still, it was like we were swimming.
+            The moment you told me, you made me feel better than I ever had."
         </p>
     </div>
 </div>
@@ -357,7 +371,6 @@
 <div class="photo-frame" style="top: 25%; left: 15%; width: 130px; height: 130px; --initial-rotation: -15deg; --float-rotation: 2deg; animation-delay: 12s;"><img src="img/1.png"></div>
 <div class="photo-frame" style="top: 5%; right: 20%; width: 110px; height: 110px; --initial-rotation: 4deg; --float-rotation: -3deg; animation-delay: 13s;"><img src="img/2.png"></div>
 <div class="photo-frame" style="bottom: 30%; left: 70%; width: 140px; height: 140px; --initial-rotation: 12deg; --float-rotation: -2deg; animation-delay: 14s;"><img src="img/3.png"></div>
-
 
 <script>
     const vibes = [
@@ -413,14 +426,18 @@
         }
 
         if (idx >= vibes.length - 1) {
-            mainPanel.style.display = 'none';
-            messagePanel.style.display = 'block';
+            mainPanel.classList.add('fade-out');
             setTimeout(() => {
-                messagePanel.classList.add('show');
-            }, 100);
+                mainPanel.style.display = 'none';
+                messagePanel.style.display = 'block';
+                setTimeout(() => {
+                    messagePanel.classList.add('show');
+                }, 100);
+            }, 1000); // tempo para o fade-out
             return;
         }
 
+        mainPanel.classList.remove('fade-out');
         mainPanel.style.display = 'block';
         messagePanel.style.display = 'none';
         messagePanel.classList.remove('show');
@@ -534,32 +551,65 @@
         }
     });
 
-    // Script para gerar corações caindo de forma aleatória
+    // Função para o carrossel com deslize (swipe)
     const stage = document.querySelector('.stage');
+    let touchStartX = 0;
+    let touchEndX = 0;
 
+    stage.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    stage.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].clientX;
+        handleSwipe();
+    });
+
+    stage.addEventListener('mousedown', (e) => {
+        touchStartX = e.clientX;
+    });
+
+    stage.addEventListener('mouseup', (e) => {
+        touchEndX = e.clientX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Deslize para a esquerda (próxima música)
+            current = (current + 1) % vibes.length;
+            setVibe(current);
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+            // Deslize para a direita (música anterior)
+            current = (current + vibes.length - 1) % vibes.length;
+            setVibe(current);
+        }
+    }
+
+    const fallingHeartStage = document.querySelector('.stage');
+    
     function createFallingHeart() {
         const heart = document.createElement('div');
         const sizes = ['small', 'medium', 'large'];
         const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
         const randomLeft = Math.random() * 100;
-        const randomDuration = Math.random() * 10 + 5; // 5 a 15 segundos
-        const randomDelay = Math.random() * 5; // 0 a 5 segundos
+        const randomDuration = Math.random() * 10 + 5;
+        const randomDelay = Math.random() * 5;
 
         heart.classList.add('falling-heart', randomSize);
         heart.style.left = `${randomLeft}vw`;
         heart.style.animationDuration = `${randomDuration}s`;
         heart.style.animationDelay = `${randomDelay}s`;
+        
+        fallingHeartStage.appendChild(heart);
 
-        stage.appendChild(heart);
-
-        // Remove o coração da tela quando a animação terminar
         heart.addEventListener('animationend', () => {
             heart.remove();
         });
     }
 
-    // Gerar um novo coração a cada 0.5 segundos
-    setInterval(createFallingHeart, 500);
+    setInterval(createFallingHeart, 200);
 </script>
 </body>
 </html>
