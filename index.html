@@ -65,7 +65,7 @@
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
             line-height: 1.6;
             margin-bottom: 20px;
-            min-height: 5em;
+            min-height: 5em; /* Garante altura mínima para evitar "pulos" */
         }
 
         .highlighted-lyric {
@@ -113,6 +113,7 @@
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             animation: float 8s ease-in-out infinite alternate;
+            z-index: 1; /* Para garantir que fiquem atrás do painel central */
         }
 
         .photo-frame img {
@@ -122,15 +123,15 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+            0% { transform: translateY(0px) rotate(var(--initial-rotation, 0deg)); }
+            50% { transform: translateY(-15px) rotate(calc(var(--initial-rotation, 0deg) + var(--float-rotation, 2deg))); }
+            100% { transform: translateY(0px) rotate(var(--initial-rotation, 0deg)); }
         }
 
         #ytPlayerContainer {
             position: relative;
             width: 100%;
-            padding-top: 56.25%;
+            padding-top: 56.25%; /* Proporção 16:9 */
             margin-bottom: 20px;
             border-radius: 16px;
             overflow: hidden;
@@ -145,6 +146,7 @@
             border: none;
         }
 
+        /* Responsividade para telas menores */
         @media (max-width: 768px) {
             .center-panel {
                 width: 90%;
@@ -164,8 +166,9 @@
             }
 
             .photo-frame {
-                width: 100px;
-                height: 100px;
+                width: 80px; /* Reduz o tamanho das fotos no celular */
+                height: 80px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             }
         }
     </style>
@@ -182,28 +185,37 @@
     </div>
 </div>
 
-<div class="photo-frame" style="top: 10%; left: 5%;"><img src="img/9.png"></div>
-<div class="photo-frame" style="top: 20%; right: 5%;"><img src="img/1.png"></div>
-<div class="photo-frame" style="bottom: 15%; left: 10%;"><img src="img/10.png"></div>
-<div class="photo-frame" style="bottom: 10%; right: 12%;"><img src="img/2.png"></div>
-<div class="photo-frame" style="top: 50%; left: 20%;"><img src="img/3.png"></div>
-<div class="photo-frame" style="bottom: 25%; right: 35%;"><img src="img/4.png"></div>
-<div class="photo-frame" style="top: 35%; right: 25%;"><img src="img/5.png"></div>
-<div class="photo-frame" style="bottom: 5%; left: 50%;"><img src="img/6.png"></div>
-<div class="photo-frame" style="top: 15%; left: 70%;"><img src="img/7.png"></div>
-<div class="photo-frame" style="bottom: 40%; left: 5%;"><img src="img/8.png"></div>
-<div class="photo-frame" style="top: 5%; left: 40%; transform: rotate(5deg); animation-delay: 1s;"><img src="img/1.png"></div>
-<div class="photo-frame" style="top: 30%; left: 50%; transform: rotate(-8deg); animation-delay: 2s;"><img src="img/2.png"></div>
-<div class="photo-frame" style="bottom: 20%; right: 50%; transform: rotate(10deg); animation-delay: 3s;"><img src="img/3.png"></div>
-<div class="photo-frame" style="top: 60%; right: 10%; transform: rotate(-5deg); animation-delay: 4s;"><img src="img/4.png"></div>
-<div class="photo-frame" style="bottom: 30%; left: 30%; transform: rotate(3deg); animation-delay: 5s;"><img src="img/5.png"></div>
-<div class="photo-frame" style="top: 70%; left: 5%; transform: rotate(-12deg); animation-delay: 6s;"><img src="img/6.png"></div>
-<div class="photo-frame" style="bottom: 50%; right: 5%; transform: rotate(7deg); animation-delay: 7s;"><img src="img/7.png"></div>
+<div class="photo-frame" style="top: 10%; left: 5%; --initial-rotation: 0deg; --float-rotation: 2deg;"><img src="img/9.png"></div>
+<div class="photo-frame" style="top: 20%; right: 5%; --initial-rotation: 5deg; --float-rotation: -2deg;"><img src="img/1.png"></div>
+<div class="photo-frame" style="bottom: 15%; left: 10%; --initial-rotation: -3deg; --float-rotation: 3deg;"><img src="img/10.png"></div>
+<div class="photo-frame" style="bottom: 10%; right: 12%; --initial-rotation: 7deg; --float-rotation: -1deg;"><img src="img/2.png"></div>
+<div class="photo-frame" style="top: 50%; left: 20%; --initial-rotation: -8deg; --float-rotation: 2deg;"><img src="img/3.png"></div>
+<div class="photo-frame" style="bottom: 25%; right: 35%; --initial-rotation: 2deg; --float-rotation: -3deg;"><img src="img/4.png"></div>
+<div class="photo-frame" style="top: 35%; right: 25%; --initial-rotation: -5deg; --float-rotation: 1deg;"><img src="img/5.png"></div>
+<div class="photo-frame" style="bottom: 5%; left: 50%; --initial-rotation: 9deg; --float-rotation: -2deg;"><img src="img/6.png"></div>
+<div class="photo-frame" style="top: 15%; left: 70%; --initial-rotation: -1deg; --float-rotation: 3deg;"><img src="img/7.png"></div>
+<div class="photo-frame" style="bottom: 40%; left: 5%; --initial-rotation: 4deg; --float-rotation: -1deg;"><img src="img/8.png"></div>
+
+<div class="photo-frame" style="top: 5%; left: 40%; width: 120px; height: 120px; --initial-rotation: 10deg; --float-rotation: -3deg; animation-delay: 1.5s;"><img src="img/1.png"></div>
+<div class="photo-frame" style="top: 25%; left: 15%; width: 130px; height: 130px; --initial-rotation: -15deg; --float-rotation: 2deg; animation-delay: 3s;"><img src="img/2.png"></div>
+<div class="photo-frame" style="bottom: 5%; left: 25%; width: 100px; height: 100px; --initial-rotation: 20deg; --float-rotation: -1deg; animation-delay: 4.5s;"><img src="img/3.png"></div>
+<div class="photo-frame" style="top: 45%; right: 15%; width: 140px; height: 140px; --initial-rotation: -10deg; --float-rotation: 3deg; animation-delay: 6s;"><img src="img/4.png"></div>
+<div class="photo-frame" style="bottom: 30%; left: 70%; width: 110px; height: 110px; --initial-rotation: 12deg; --float-rotation: -2deg; animation-delay: 7.5s;"><img src="img/5.png"></div>
+<div class="photo-frame" style="top: 65%; left: 40%; width: 160px; height: 160px; --initial-rotation: -7deg; --float-rotation: 1deg; animation-delay: 9s;"><img src="img/6.png"></div>
+<div class="photo-frame" style="top: 18%; right: 60%; width: 90px; height: 90px; --initial-rotation: 18deg; --float-rotation: -3deg; animation-delay: 10.5s;"><img src="img/7.png"></div>
+<div class="photo-frame" style="bottom: 60%; right: 2%; width: 150px; height: 150px; --initial-rotation: -4deg; --float-rotation: 2deg; animation-delay: 12s;"><img src="img/8.png"></div>
+<div class="photo-frame" style="top: 80%; left: 80%; width: 120px; height: 120px; --initial-rotation: 6deg; --float-rotation: -1deg; animation-delay: 13.5s;"><img src="img/9.png"></div>
+<div class="photo-frame" style="bottom: 80%; left: 2%; width: 110px; height: 110px; --initial-rotation: -9deg; --float-rotation: 3deg; animation-delay: 15s;"><img src="img/10.png"></div>
+<div class="photo-frame" style="top: 55%; left: 5%; width: 140px; height: 140px; --initial-rotation: -10deg; --float-rotation: 1deg; animation-delay: 16.5s;"><img src="img/1.png"></div>
+<div class="photo-frame" style="top: 2%; right: 25%; width: 115px; height: 115px; --initial-rotation: 8deg; --float-rotation: -2deg; animation-delay: 18s;"><img src="img/2.png"></div>
+<div class="photo-frame" style="bottom: 45%; left: 20%; width: 105px; height: 105px; --initial-rotation: 15deg; --float-rotation: 3deg; animation-delay: 19.5s;"><img src="img/3.png"></div>
+<div class="photo-frame" style="bottom: 15%; right: 25%; width: 135px; height: 135px; --initial-rotation: -6deg; --float-rotation: -1deg; animation-delay: 21s;"><img src="img/4.png"></div>
+
 
 <script>
     const vibes = [
         {
-            title: "Você e Unica",
+            title: "Você é única",
             lyrics: [
                 "Um começo cheio de boas vibrações.",
                 "O som que abre caminho para momentos especiais.",
@@ -212,7 +224,7 @@
             iframeHTML: '<iframe src="https://www.youtube.com/embed/m8kPN8e1RFk?si=syki1W02ZFoTxEEj" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
         },
         {
-            title: "Autenticidade que você possui ",
+            title: "Autenticidade que você possui",
             lyrics: [
                 "Ela é autêntica de um jeito que ilumina.",
                 "Não precisa de moldes, ela é única.",
@@ -221,7 +233,7 @@
             iframeHTML: '<iframe src="https://www.youtube.com/embed/pxrNYPc0GmQ?si=Pd0wzhbwYEbSeng4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
         },
         {
-            title: "Conexão que trasmiti",
+            title: "Conexão que transmite",
             lyrics: [
                 "Cada nota aproxima dois corações.",
                 "Pequenos gestos criam grandes memórias.",
@@ -266,7 +278,9 @@
                 lines[currentLyricIndex].classList.add('highlighted-lyric');
                 currentLyricIndex++;
             } else {
-                lines[lines.length - 1].classList.remove('highlighted-lyric');
+                if (lines.length > 0) {
+                    lines[lines.length - 1].classList.remove('highlighted-lyric');
+                }
                 currentLyricIndex = 0;
             }
         }, 5000);
@@ -274,7 +288,7 @@
         autoChangeInterval = setInterval(() => {
             current = (current + 1) % vibes.length;
             setVibe(current);
-        }, 15000); // Troca a cada 15 segundos
+        }, 15000);
     }
 
     document.getElementById("prevBtn").addEventListener("click", () => {
