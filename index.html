@@ -115,6 +115,7 @@
             animation: float 8s ease-in-out infinite alternate;
             z-index: 1;
             cursor: grab;
+            border: 3px solid white; /* Borda branca para combinar com o fundo */
         }
         
         .photo-frame.dragging {
@@ -139,8 +140,7 @@
         #ytPlayerContainer {
             position: relative;
             width: 100%;
-            /* A proporção 16:9 é ideal para vídeos do YouTube */
-            padding-top: 56.25%; /* 9 / 16 = 0.5625 */
+            padding-top: 56.25%;
             margin-bottom: 20px;
             border-radius: 16px;
             overflow: hidden;
@@ -175,7 +175,6 @@
             }
 
             .photo-frame {
-                /* Diminui o tamanho das fotos para telas menores */
                 width: 80px;
                 height: 80px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -195,38 +194,26 @@
     </div>
 </div>
 
-<div class="photo-frame" style="top: 10%; left: 5%; --initial-rotation: 0deg; --float-rotation: 2deg;"><img src="img/9.png"></div>
-<div class="photo-frame" style="top: 20%; right: 5%; --initial-rotation: 5deg; --float-rotation: -2deg;"><img src="img/1.png"></div>
-<div class="photo-frame" style="bottom: 15%; left: 10%; --initial-rotation: -3deg; --float-rotation: 3deg;"><img src="img/10.png"></div>
-<div class="photo-frame" style="bottom: 10%; right: 12%; --initial-rotation: 7deg; --float-rotation: -1deg;"><img src="img/2.png"></div>
-<div class="photo-frame" style="top: 50%; left: 20%; --initial-rotation: -8deg; --float-rotation: 2deg;"><img src="img/3.png"></div>
-<div class="photo-frame" style="bottom: 25%; right: 35%; --initial-rotation: 2deg; --float-rotation: -3deg;"><img src="img/4.png"></div>
-<div class="photo-frame" style="top: 35%; right: 25%; --initial-rotation: -5deg; --float-rotation: 1deg;"><img src="img/5.png"></div>
-<div class="photo-frame" style="bottom: 5%; left: 50%; --initial-rotation: 9deg; --float-rotation: -2deg;"><img src="img/6.png"></div>
-<div class="photo-frame" style="top: 15%; left: 70%; --initial-rotation: -1deg; --float-rotation: 3deg;"><img src="img/7.png"></div>
-<div class="photo-frame" style="bottom: 40%; left: 5%; --initial-rotation: 4deg; --float-rotation: -1deg;"><img src="img/8.png"></div>
+<div class="photo-frame" style="top: 5%; left: 5%; width: 140px; height: 140px; --initial-rotation: -10deg; --float-rotation: 2deg;"><img src="img/1.png"></div>
+<div class="photo-frame" style="top: 15%; left: 15%; width: 120px; height: 120px; --initial-rotation: 5deg; --float-rotation: -1deg; animation-delay: 2s;"><img src="img/9.png"></div>
+<div class="photo-frame" style="top: 25%; left: 8%; width: 100px; height: 100px; --initial-rotation: -3deg; --float-rotation: 3deg; animation-delay: 4s;"><img src="img/12.png"></div>
 
-<div class="photo-frame" style="top: 5%; left: 40%; width: 120px; height: 120px; --initial-rotation: 10deg; --float-rotation: -3deg; animation-delay: 1.5s;"><img src="img/1.png"></div>
-<div class="photo-frame" style="top: 25%; left: 15%; width: 130px; height: 130px; --initial-rotation: -15deg; --float-rotation: 2deg; animation-delay: 3s;"><img src="img/2.png"></div>
-<div class="photo-frame" style="bottom: 5%; left: 25%; width: 100px; height: 100px; --initial-rotation: 20deg; --float-rotation: -1deg; animation-delay: 4.5s;"><img src="img/3.png"></div>
-<div class="photo-frame" style="top: 45%; right: 15%; width: 140px; height: 140px; --initial-rotation: -10deg; --float-rotation: 3deg; animation-delay: 6s;"><img src="img/4.png"></div>
-<div class="photo-frame" style="bottom: 30%; left: 70%; width: 110px; height: 110px; --initial-rotation: 12deg; --float-rotation: -2deg; animation-delay: 7.5s;"><img src="img/5.png"></div>
-<div class="photo-frame" style="top: 65%; left: 40%; width: 160px; height: 160px; --initial-rotation: -7deg; --float-rotation: 1deg; animation-delay: 9s;"><img src="img/6.png"></div>
-<div class="photo-frame" style="top: 18%; right: 60%; width: 90px; height: 90px; --initial-rotation: 18deg; --float-rotation: -3deg; animation-delay: 10.5s;"><img src="img/7.png"></div>
-<div class="photo-frame" style="bottom: 60%; right: 2%; width: 150px; height: 150px; --initial-rotation: -4deg; --float-rotation: 2deg; animation-delay: 12s;"><img src="img/8.png"></div>
-<div class="photo-frame" style="top: 80%; left: 80%; width: 120px; height: 120px; --initial-rotation: 6deg; --float-rotation: -1deg; animation-delay: 13.5s;"><img src="img/9.png"></div>
-<div class="photo-frame" style="bottom: 80%; left: 2%; width: 110px; height: 110px; --initial-rotation: -9deg; --float-rotation: 3deg; animation-delay: 15s;"><img src="img/10.png"></div>
-<div class="photo-frame" style="top: 55%; left: 5%; width: 140px; height: 140px; --initial-rotation: -10deg; --float-rotation: 1deg; animation-delay: 16.5s;"><img src="img/1.png"></div>
-<div class="photo-frame" style="top: 2%; right: 25%; width: 115px; height: 115px; --initial-rotation: 8deg; --float-rotation: -2deg; animation-delay: 18s;"><img src="img/2.png"></div>
-<div class="photo-frame" style="bottom: 45%; left: 20%; width: 105px; height: 105px; --initial-rotation: 15deg; --float-rotation: 3deg; animation-delay: 19.5s;"><img src="img/3.png"></div>
-<div class="photo-frame" style="bottom: 15%; right: 25%; width: 135px; height: 135px; --initial-rotation: -6deg; --float-rotation: -1deg; animation-delay: 21s;"><img src="img/4.png"></div>
+<div class="photo-frame" style="top: 10%; right: 10%; width: 150px; height: 150px; --initial-rotation: 12deg; --float-rotation: -2deg;"><img src="img/2.png"></div>
+<div class="photo-frame" style="top: 20%; right: 5%; width: 110px; height: 110px; --initial-rotation: -8deg; --float-rotation: 1deg; animation-delay: 3s;"><img src="img/12.png"></div>
+<div class="photo-frame" style="top: 5%; right: 20%; width: 130px; height: 130px; --initial-rotation: 4deg; --float-rotation: -3deg; animation-delay: 5s;"><img src="img/10.png"></div>
 
-<div class="photo-frame" style="top: 70%; right: 18%; width: 125px; height: 125px; --initial-rotation: 10deg; --float-rotation: -2deg; animation-delay: 22s;"><img src="img/12.png"></div>
-<div class="photo-frame" style="top: 30%; left: 75%; width: 95px; height: 95px; --initial-rotation: -12deg; --float-rotation: 3deg; animation-delay: 23.5s;"><img src="img/12.png"></div>
-<div class="photo-frame" style="bottom: 3%; left: 7%; width: 160px; height: 160px; --initial-rotation: 5deg; --float-rotation: -1deg; animation-delay: 25s;"><img src="img/12.png"></div>
-<div class="photo-frame" style="top: 60%; left: 65%; width: 110px; height: 110px; --initial-rotation: -8deg; --float-rotation: 2deg; animation-delay: 26.5s;"><img src="img/12.png"></div>
-<div class="photo-frame" style="bottom: 20%; right: 5%; width: 140px; height: 140px; --initial-rotation: 15deg; --float-rotation: 2deg; animation-delay: 28s;"><img src="img/12.png"></div>
-<div class="photo-frame" style="top: 85%; left: 55%; width: 100px; height: 100px; --initial-rotation: -10deg; --float-rotation: -1deg; animation-delay: 29.5s;"><img src="img/12.png"></div>
+<div class="photo-frame" style="bottom: 10%; left: 8%; width: 135px; height: 135px; --initial-rotation: 7deg; --float-rotation: -1deg;"><img src="img/3.png"></div>
+<div class="photo-frame" style="bottom: 5%; left: 20%; width: 105px; height: 105px; --initial-rotation: -15deg; --float-rotation: 2deg; animation-delay: 2.5s;"><img src="img/12.png"></div>
+<div class="photo-frame" style="bottom: 20%; left: 2%; width: 155px; height: 155px; --initial-rotation: 9deg; --float-rotation: -2deg; animation-delay: 4.5s;"><img src="img/4.png"></div>
+
+<div class="photo-frame" style="bottom: 15%; right: 15%; width: 145px; height: 145px; --initial-rotation: -6deg; --float-rotation: 3deg;"><img src="img/5.png"></div>
+<div class="photo-frame" style="bottom: 25%; right: 8%; width: 115px; height: 115px; --initial-rotation: 10deg; --float-rotation: -1deg; animation-delay: 3.5s;"><img src="img/6.png"></div>
+<div class="photo-frame" style="bottom: 5%; right: 2%; width: 125px; height: 125px; --initial-rotation: -4deg; --float-rotation: 2deg; animation-delay: 5.5s;"><img src="img/12.png"></div>
+
+<div class="photo-frame" style="top: 45%; left: 2%; width: 110px; height: 110px; --initial-rotation: 8deg; --float-rotation: 1deg; animation-delay: 6.5s;"><img src="img/7.png"></div>
+<div class="photo-frame" style="top: 40%; right: 3%; width: 105px; height: 105px; --initial-rotation: -12deg; --float-rotation: -2deg; animation-delay: 7s;"><img src="img/8.png"></div>
+<div class="photo-frame" style="top: 60%; left: 22%; width: 130px; height: 130px; --initial-rotation: 5deg; --float-rotation: -1deg; animation-delay: 8s;"><img src="img/1.png"></div>
+<div class="photo-frame" style="top: 65%; right: 20%; width: 115px; height: 115px; --initial-rotation: -9deg; --float-rotation: 3deg; animation-delay: 9s;"><img src="img/12.png"></div>
 
 
 <script>
