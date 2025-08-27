@@ -19,9 +19,6 @@
             height: 100%;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
-        }
-
-        body {
             background-image: url('background.png');
             background-size: cover;
             background-position: center;
@@ -51,6 +48,7 @@
             border-radius: 20px;
             text-align: center;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
         }
 
         .center-panel h1 {
@@ -67,6 +65,7 @@
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
             line-height: 1.6;
             margin-bottom: 20px;
+            min-height: 5em;
         }
 
         .highlighted-lyric {
@@ -128,21 +127,45 @@
             100% { transform: translateY(0px) rotate(0deg); }
         }
 
-        #ytPlayerContainer iframe {
+        #ytPlayerContainer {
+            position: relative;
             width: 100%;
-            height: 350px;
-            border: none;
-            border-radius: 16px;
+            padding-top: 56.25%;
             margin-bottom: 20px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        #ytPlayerContainer iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         @media (max-width: 768px) {
             .center-panel {
-                width: 85%;
+                width: 90%;
                 padding: 20px;
             }
-            #ytPlayerContainer iframe {
-                height: 220px;
+
+            .nav-arrow {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            .nav-left { left: 10px; }
+            .nav-right { right: 10px; }
+
+            .lyrics {
+                font-size: 1rem;
+            }
+
+            .photo-frame {
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
@@ -169,11 +192,18 @@
 <div class="photo-frame" style="bottom: 5%; left: 50%;"><img src="img/6.png"></div>
 <div class="photo-frame" style="top: 15%; left: 70%;"><img src="img/7.png"></div>
 <div class="photo-frame" style="bottom: 40%; left: 5%;"><img src="img/8.png"></div>
+<div class="photo-frame" style="top: 5%; left: 40%; transform: rotate(5deg); animation-delay: 1s;"><img src="img/1.png"></div>
+<div class="photo-frame" style="top: 30%; left: 50%; transform: rotate(-8deg); animation-delay: 2s;"><img src="img/2.png"></div>
+<div class="photo-frame" style="bottom: 20%; right: 50%; transform: rotate(10deg); animation-delay: 3s;"><img src="img/3.png"></div>
+<div class="photo-frame" style="top: 60%; right: 10%; transform: rotate(-5deg); animation-delay: 4s;"><img src="img/4.png"></div>
+<div class="photo-frame" style="bottom: 30%; left: 30%; transform: rotate(3deg); animation-delay: 5s;"><img src="img/5.png"></div>
+<div class="photo-frame" style="top: 70%; left: 5%; transform: rotate(-12deg); animation-delay: 6s;"><img src="img/6.png"></div>
+<div class="photo-frame" style="bottom: 50%; right: 5%; transform: rotate(7deg); animation-delay: 7s;"><img src="img/7.png"></div>
 
 <script>
     const vibes = [
         {
-            title: "You're Living in a 90's Romcom",
+            title: "Você e Unica",
             lyrics: [
                 "Um começo cheio de boas vibrações.",
                 "O som que abre caminho para momentos especiais.",
@@ -182,7 +212,7 @@
             iframeHTML: '<iframe src="https://www.youtube.com/embed/m8kPN8e1RFk?si=syki1W02ZFoTxEEj" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
         },
         {
-            title: "Autenticidade",
+            title: "Autenticidade que você possui ",
             lyrics: [
                 "Ela é autêntica de um jeito que ilumina.",
                 "Não precisa de moldes, ela é única.",
@@ -191,7 +221,7 @@
             iframeHTML: '<iframe src="https://www.youtube.com/embed/pxrNYPc0GmQ?si=Pd0wzhbwYEbSeng4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
         },
         {
-            title: "Conexão",
+            title: "Conexão que trasmiti",
             lyrics: [
                 "Cada nota aproxima dois corações.",
                 "Pequenos gestos criam grandes memórias.",
@@ -206,18 +236,21 @@
     const lyricsEl = document.getElementById("lyrics");
     const ytPlayerContainer = document.getElementById("ytPlayerContainer");
     let karaokeInterval;
-    let currentLyricIndex = 0;
+    let autoChangeInterval;
 
     function setVibe(idx) {
         if (karaokeInterval) {
             clearInterval(karaokeInterval);
+        }
+        if (autoChangeInterval) {
+            clearInterval(autoChangeInterval);
         }
 
         const v = vibes[idx];
         titleEl.textContent = v.title;
         ytPlayerContainer.innerHTML = v.iframeHTML;
 
-        currentLyricIndex = 0;
+        let currentLyricIndex = 0;
         lyricsEl.textContent = "";
 
         const lyricLines = v.lyrics.map(line => `<span class="lyric-line">${line}</span>`).join('<br>');
@@ -237,6 +270,11 @@
                 currentLyricIndex = 0;
             }
         }, 5000);
+
+        autoChangeInterval = setInterval(() => {
+            current = (current + 1) % vibes.length;
+            setVibe(current);
+        }, 15000); // Troca a cada 15 segundos
     }
 
     document.getElementById("prevBtn").addEventListener("click", () => {
