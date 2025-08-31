@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Playlist  Frank Ocean – para você</title>
+<title>Playlist Romântica – Frank Ocean</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
@@ -167,22 +167,23 @@ button.carousel-btn:hover {
     </div>
 
     <div class="photo-frame" style="top:10%; left:5%; width:120px; height:120px;"><img src="img/1.png"></div>
-    <div class="photo-frame" style="top:20%; right:10%; width:140px; height:140px;"><img src="img/2.png"></div>
-    <div class="photo-frame" style="bottom:15%; left:25%; width:130px; height:130px;"><img src="img/3.png"></div>
-    <div class="photo-frame" style="bottom:10%; right:20%; width:110px; height:110px;"><img src="img/4.png"></div>
-    <div class="photo-frame" style="top:5%; left:45%; width:100px; height:100px; transform: rotate(10deg);"><img src="img/5.png"></div>
-    <div class="photo-frame" style="top:30%; left:20%; width:150px; height:150px; transform: rotate(-5deg);"><img src="img/6.png"></div>
-    <div class="photo-frame" style="bottom:5%; left:50%; width:120px; height:120px; transform: rotate(15deg);"><img src="img/7.png"></div>
-    <div class="photo-frame" style="top:50%; right:25%; width:140px; height:140px; transform: rotate(-10deg);"><img src="img/8.png"></div>
-    <div class="photo-frame" style="bottom:20%; right:45%; width:110px; height:110px; transform: rotate(20deg);"><img src="img/9.png"></div>
-    <div class="photo-frame" style="top:40%; left:5%; width:130px; height:130px; transform: rotate(-15deg);"><img src="img/10.png"></div>
+    <div class="photo-frame" style="top:25%; left:15%; width:140px; height:140px;"><img src="img/2.png"></div>
+    <div class="photo-frame" style="top:5%; right:10%; width:130px; height:130px;"><img src="img/3.png"></div>
+    <div class="photo-frame" style="top:30%; right:5%; width:110px; height:110px;"><img src="img/4.png"></div>
+    <div class="photo-frame" style="bottom:10%; left:5%; width:100px; height:100px; transform: rotate(10deg);"><img src="img/5.png"></div>
+    <div class="photo-frame" style="bottom:25%; left:18%; width:150px; height:150px; transform: rotate(-5deg);"><img src="img/6.png"></div>
+    <div class="photo-frame" style="bottom:5%; right:15%; width:120px; height:120px; transform: rotate(15deg);"><img src="img/7.png"></div>
+    <div class="photo-frame" style="bottom:20%; right:5%; width:140px; height:140px; transform: rotate(-10deg);"><img src="img/8.png"></div>
+    <div class="photo-frame" style="top:40%; left:4%; width:110px; height:110px; transform: rotate(20deg);"><img src="img/9.png"></div>
+    <div class="photo-frame" style="top:55%; right:4%; width:130px; height:130px; transform: rotate(-15deg);"><img src="img/10.png"></div>
 </div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
 const vibes = [
     {
         title: "Thinkin Bout You",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/RgsZvjENnm0?si=RnRFeTV6mL4txicq" allowfullscreen></iframe>',
+        videoId: "RgsZvjENnm0",
         fullLyrics: [
             "A tornado flew around my room before you came",
             "Excuse the mess it made, it usually doesn't rain",
@@ -233,7 +234,7 @@ const vibes = [
     },
     {
         title: "Pink + White",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/uzS3WG6__G4?si=p2QrImFktK8tGqvi" allowfullscreen></iframe>',
+        videoId: "uzS3WG6__G4",
         fullLyrics: [
             "Yeah, yeah, uh (woo!)",
             "Yeah, yeah, yeah",
@@ -295,7 +296,7 @@ const vibes = [
     },
     {
         title: "Godspeed",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/P18g4rKns6Q?si=Xvw51sZ6WF4gJTT-" allowfullscreen></iframe>',
+        videoId: "P18g4rKns6Q",
         fullLyrics: [
             "I will always love you",
             "How I do",
@@ -324,19 +325,52 @@ const vibes = [
 
 let current = 0;
 let lyricsInterval;
+let player;
 
 const songTitle = document.getElementById("songTitle");
-const ytPlayerContainer = document.getElementById("ytPlayerContainer");
 const fullLyricsContainer = document.getElementById("fullLyricsContainer");
 
-function setVibe(index) {
+function onYouTubeIframeAPIReady() {
+    loadVibe(0);
+}
+
+function loadVibe(index) {
     current = (index + vibes.length) % vibes.length;
     const vibe = vibes[current];
     songTitle.textContent = vibe.title;
-    ytPlayerContainer.innerHTML = vibe.iframeHTML;
 
     fullLyricsContainer.innerHTML = '';
+    clearInterval(lyricsInterval);
     
+    if (player) {
+        player.destroy();
+    }
+    
+    player = new YT.Player('ytPlayerContainer', {
+        videoId: vibe.videoId,
+        playerVars: {
+            'controls': 1
+        },
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerStateChange(event) {
+    // YT.PlayerState.PLAYING é o estado 1
+    if (event.data === YT.PlayerState.PLAYING) {
+        startDisplayingLyrics();
+    } else {
+        clearInterval(lyricsInterval);
+    }
+}
+
+function startDisplayingLyrics() {
+    const vibe = vibes[current];
+    fullLyricsContainer.innerHTML = '';
+    
+    // Clear previous interval if any
     clearInterval(lyricsInterval);
 
     let lineIndex = 0;
@@ -354,8 +388,8 @@ function setVibe(index) {
     lyricsInterval = setInterval(displayNextLine, 3000);
 }
 
-document.getElementById("prevBtn").addEventListener("click", () => setVibe(current - 1));
-document.getElementById("nextBtn").addEventListener("click", () => setVibe(current + 1));
+document.getElementById("prevBtn").addEventListener("click", () => loadVibe(current - 1));
+document.getElementById("nextBtn").addEventListener("click", () => loadVibe(current + 1));
 
 // New emoji loop logic
 const emojiElement = document.getElementById("emojiLoop");
@@ -366,9 +400,6 @@ setInterval(() => {
     emojiElement.textContent = emojis[emojiIndex];
     emojiIndex = (emojiIndex + 1) % emojis.length;
 }, 1000); // Trocando a cada 1 segundo
-
-// Set initial vibe
-setVibe(0);
 </script>
 </body>
 </html>
