@@ -36,15 +36,16 @@ body, html {
 
 .center-panel {
     position: relative;
-    z-index: 1; /* painel atrás do karaoke e fotos */
-    width: 60%;
+    z-index: 1;
+    width: 90%; /* Ajuste para ter mais espaço em telas menores */
     max-width: 800px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    padding: 40px;
+    padding: 20px; /* Reduzi o padding para dar mais espaço */
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; /* Garante que o padding não adicione largura extra */
 }
 
 .center-panel h1 {
@@ -60,7 +61,7 @@ body, html {
     margin-top: 20px;
     font-size: 1rem;
     line-height: 1.5;
-    max-height: 300px; /* Increased height for better visibility */
+    max-height: 300px;
     overflow-y: auto;
     padding-right: 15px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -90,7 +91,7 @@ button.carousel-btn:hover {
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     animation: float 8s ease-in-out infinite alternate;
-    z-index: 2; /* below the karaoke */
+    z-index: 2;
     cursor: grab;
     border: 3px solid white;
 }
@@ -146,7 +147,7 @@ button.carousel-btn:hover {
 .emoji-loop {
     font-size: 1.5rem;
     margin-left: 10px;
-    width: 30px; /* Fixed width to prevent shifting */
+    width: 30px;
     text-align: left;
 }
 </style>
@@ -358,7 +359,6 @@ function loadVibe(index) {
 }
 
 function onPlayerStateChange(event) {
-    // YT.PlayerState.PLAYING é o estado 1
     if (event.data === YT.PlayerState.PLAYING) {
         startDisplayingLyrics();
     } else {
@@ -370,7 +370,6 @@ function startDisplayingLyrics() {
     const vibe = vibes[current];
     fullLyricsContainer.innerHTML = '';
     
-    // Clear previous interval if any
     clearInterval(lyricsInterval);
 
     let lineIndex = 0;
@@ -391,7 +390,6 @@ function startDisplayingLyrics() {
 document.getElementById("prevBtn").addEventListener("click", () => loadVibe(current - 1));
 document.getElementById("nextBtn").addEventListener("click", () => loadVibe(current + 1));
 
-// New emoji loop logic
 const emojiElement = document.getElementById("emojiLoop");
 const emojis = ["❤️", "✨", "🥰", "🌹"];
 let emojiIndex = 0;
@@ -399,7 +397,7 @@ let emojiIndex = 0;
 setInterval(() => {
     emojiElement.textContent = emojis[emojiIndex];
     emojiIndex = (emojiIndex + 1) % emojis.length;
-}, 1000); // Trocando a cada 1 segundo
+}, 1000);
 </script>
 </body>
 </html>
