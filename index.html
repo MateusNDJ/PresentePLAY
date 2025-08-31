@@ -37,8 +37,8 @@ body, html {
 .center-panel {
     position: relative;
     z-index: 1; /* painel atrás do karaoke e fotos */
-    width: 60%; /* Revertido para 60% ou ajuste conforme preferir */
-    max-width: 800px; /* Max-width para o painel */
+    width: 60%;
+    max-width: 800px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     padding: 40px;
@@ -54,27 +54,19 @@ body, html {
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Estilo do Karaokê sobreposto */
-.karaoke-highlight {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem; /* Tamanho da fonte grande */
-    font-weight: bold;
+#fullLyricsContainer {
     color: #fff;
-    text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
     text-align: center;
-    z-index: 5; /* Sobreposto a tudo */
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    pointer-events: none;
-    max-width: 90%; /* Limita a largura para evitar quebras de linha muito longas */
-    line-height: 1.2;
-}
-
-.karaoke-highlight.active {
-    opacity: 1;
+    margin-top: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+    max-height: 300px; /* Increased height for better visibility */
+    overflow-y: auto;
+    padding-right: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 15px;
 }
 
 button.carousel-btn {
@@ -91,14 +83,14 @@ button.carousel-btn:hover {
     background: #ff7899;
 }
 
-/* Fotos flutuantes */
+/* Floating Photos */
 .photo-frame {
     position: absolute;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     animation: float 8s ease-in-out infinite alternate;
-    z-index: 2; /* abaixo do karaoke */
+    z-index: 2; /* below the karaoke */
     cursor: grab;
     border: 3px solid white;
 }
@@ -123,15 +115,11 @@ button.carousel-btn:hover {
 
 #ytPlayerContainer {
     position: relative;
-    width: 100%; /* Ocupa a largura total do center-panel */
-    padding-top: 56.25%; /* Proporção 16:9 */
+    width: 100%;
+    padding-top: 56.25%;
     margin-bottom: 20px;
     border-radius: 16px;
     overflow: hidden;
-    max-width: 640px; /* Largura máxima para o player, ajuste conforme seu gosto */
-    height: auto; /* Altura automática para manter a proporção */
-    margin-left: auto; /* Centraliza o player */
-    margin-right: auto; /* Centraliza o player */
 }
 #ytPlayerContainer iframe {
     position: absolute;
@@ -149,11 +137,10 @@ button.carousel-btn:hover {
     <div class="center-panel" id="panel">
         <h1 id="songTitle"></h1>
         <div id="ytPlayerContainer"></div>
+        <div id="fullLyricsContainer"></div>
         <button class="carousel-btn" id="prevBtn">Anterior</button>
         <button class="carousel-btn" id="nextBtn">Próxima</button>
     </div>
-
-    <div class="karaoke-highlight" id="karaokeHighlight"></div>
 
     <div class="photo-frame" style="top:10%; left:5%; width:120px; height:120px;"><img src="img/1.png"></div>
     <div class="photo-frame" style="top:20%; right:10%; width:140px; height:140px;"><img src="img/2.png"></div>
@@ -161,12 +148,11 @@ button.carousel-btn:hover {
     <div class="photo-frame" style="bottom:10%; right:20%; width:110px; height:110px;"><img src="img/4.png"></div>
 </div>
 
-<script src="https://www.youtube.com/iframe_api"></script>
 <script>
 const vibes = [
     {
         title: "Thinkin Bout You",
-        videoId: "RgsZvjENnm0",
+        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/RgsZvjENnm0?si=RnRFeTV6mL4txicq" allowfullscreen></iframe>',
         fullLyrics: [
             "A tornado flew around my room before you came",
             "Excuse the mess it made, it usually doesn't rain",
@@ -217,7 +203,7 @@ const vibes = [
     },
     {
         title: "Pink + White",
-        videoId: "uzS3WG6__G4",
+        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/uzS3WG6__G4?si=p2QrImFktK8tGqvi" allowfullscreen></iframe>',
         fullLyrics: [
             "Yeah, yeah, uh (woo!)",
             "Yeah, yeah, yeah",
@@ -279,7 +265,7 @@ const vibes = [
     },
     {
         title: "Godspeed",
-        videoId: "P18g4rKns6Q",
+        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/P18g4rKns6Q?si=Xvw51sZ6WF4gJTT-" allowfullscreen></iframe>',
         fullLyrics: [
             "I will always love you",
             "How I do",
@@ -307,99 +293,45 @@ const vibes = [
 ];
 
 let current = 0;
-let lyricsIndex = 0; // Para controlar qual linha da letra está sendo exibida
 let lyricsInterval;
-let player;
-let playerReady = false;
 
 const songTitle = document.getElementById("songTitle");
-const karaokeHighlight = document.getElementById("karaokeHighlight"); // De volta ao elemento de destaque
+const ytPlayerContainer = document.getElementById("ytPlayerContainer");
+const fullLyricsContainer = document.getElementById("fullLyricsContainer");
 
-function onYouTubeIframeAPIReady() {
-    playerReady = true;
-    loadVibe(0);
-}
-
-function loadVibe(index) {
+function setVibe(index) {
     current = (index + vibes.length) % vibes.length;
     const vibe = vibes[current];
     songTitle.textContent = vibe.title;
-    
-    // Limpa o destaque anterior e para o intervalo de letras
-    karaokeHighlight.classList.remove("active");
-    clearInterval(lyricsInterval);
-    
-    // Zera o índice da letra
-    lyricsIndex = 0;
+    ytPlayerContainer.innerHTML = vibe.iframeHTML;
 
-    // Se o player existe, o destrói para criar um novo
-    if (player) {
-        player.destroy();
-    }
+    fullLyricsContainer.innerHTML = '';
     
-    // Cria uma nova instância do player do YouTube
-    player = new YT.Player('ytPlayerContainer', {
-        height: '315',
-        width: '560',
-        videoId: vibe.videoId,
-        events: {
-            'onStateChange': onPlayerStateChange
-        }
-    });
-}
-
-function onPlayerStateChange(event) {
-    // Verifica se o vídeo está tocando (estado 1)
-    if (event.data === YT.PlayerState.PLAYING) {
-        // Inicia a exibição das letras apenas quando o vídeo é iniciado.
-        displayKaraokeLyrics();
-    } else {
-        // Para a animação das letras se o vídeo for pausado, encerrado, etc.
-        clearInterval(lyricsInterval);
-        karaokeHighlight.classList.remove("active");
-    }
-}
-
-function displayKaraokeLyrics() {
-    const vibe = vibes[current];
-    
-    // Limpa qualquer intervalo de letras anterior
+    // Clear previous interval if any
     clearInterval(lyricsInterval);
 
-    // Zera o índice da letra ao iniciar a reprodução para esta música
-    lyricsIndex = 0;
-
-    const showNextLyricLine = () => {
-        if (lyricsIndex < vibe.fullLyrics.length) {
-            karaokeHighlight.classList.remove("active"); // Remove a classe para animar a saída
-            setTimeout(() => {
-                karaokeHighlight.textContent = vibe.fullLyrics[lyricsIndex];
-                karaokeHighlight.classList.add("active"); // Adiciona a classe para animar a entrada
-                lyricsIndex++;
-            }, 500); // Pequeno atraso para a transição de fade
-        } else {
-            clearInterval(lyricsInterval); // Para o intervalo quando todas as linhas forem exibidas
-            karaokeHighlight.classList.remove("active"); // Oculta a última linha
+    let lineIndex = 0;
+    
+    // Function to display the next line with a delay
+    const displayNextLine = () => {
+        if (lineIndex < vibe.fullLyrics.length) {
+            const line = document.createElement('p');
+            line.textContent = vibe.fullLyrics[lineIndex];
+            fullLyricsContainer.appendChild(line);
+            fullLyricsContainer.scrollTop = fullLyricsContainer.scrollHeight;
+            lineIndex++;
         }
     };
     
-    // Inicia o loop das letras com um atraso inicial
-    showNextLyricLine(); // Exibe a primeira linha imediatamente
-    lyricsInterval = setInterval(showNextLyricLine, 4000); // Intervalo de 4 segundos para cada linha
+    // Set an interval to add each line of the lyrics
+    lyricsInterval = setInterval(displayNextLine, 3000); // Adjust the delay as needed for synchronization
 }
 
-// Event listeners para os botões "Anterior" e "Próxima"
-document.getElementById("prevBtn").addEventListener("click", () => {
-    if (playerReady) {
-        loadVibe(current - 1);
-    }
-});
+document.getElementById("prevBtn").addEventListener("click", () => setVibe(current - 1));
+document.getElementById("nextBtn").addEventListener("click", () => setVibe(current + 1));
 
-document.getElementById("nextBtn").addEventListener("click", () => {
-    if (playerReady) {
-        loadVibe(current + 1);
-    }
-});
+// Set initial vibe
+setVibe(0);
 </script>
 </body>
 </html>
