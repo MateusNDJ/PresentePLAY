@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Playlist Romântica – pra minha gatinha </title>
+<title>Playlist Romântica – Frank Ocean</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
@@ -36,7 +36,7 @@ body, html {
 
 .center-panel {
     position: relative;
-    z-index: 1; /* painel atrás do karaoke e fotos */
+    z-index: 1;
     width: 60%;
     max-width: 800px;
     background: rgba(255, 255, 255, 0.1);
@@ -54,24 +54,19 @@ body, html {
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-.karaoke-highlight {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem;
-    font-weight: bold;
+#fullLyricsContainer {
     color: #fff;
-    text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
     text-align: center;
-    z-index: 5; /* sobreposto a tudo */
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    pointer-events: none;
-}
-
-.karaoke-highlight.active {
-    opacity: 1;
+    margin-top: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 15px;
 }
 
 button.carousel-btn {
@@ -88,14 +83,14 @@ button.carousel-btn:hover {
     background: #ff7899;
 }
 
-/* Fotos flutuantes */
+/* Floating Photos */
 .photo-frame {
     position: absolute;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     animation: float 8s ease-in-out infinite alternate;
-    z-index: 2; /* abaixo do karaoke */
+    z-index: 2;
     cursor: grab;
     border: 3px solid white;
 }
@@ -142,72 +137,234 @@ button.carousel-btn:hover {
     <div class="center-panel" id="panel">
         <h1 id="songTitle"></h1>
         <div id="ytPlayerContainer"></div>
+        <div id="fullLyricsContainer"></div>
         <button class="carousel-btn" id="prevBtn">Anterior</button>
         <button class="carousel-btn" id="nextBtn">Próxima</button>
     </div>
 
-    <!-- Karaoke sobreposto -->
-    <div class="karaoke-highlight" id="karaokeHighlight"></div>
-
-    <!-- Fotos flutuantes -->
     <div class="photo-frame" style="top:10%; left:5%; width:120px; height:120px;"><img src="img/1.png"></div>
     <div class="photo-frame" style="top:20%; right:10%; width:140px; height:140px;"><img src="img/2.png"></div>
     <div class="photo-frame" style="bottom:15%; left:25%; width:130px; height:130px;"><img src="img/3.png"></div>
     <div class="photo-frame" style="bottom:10%; right:20%; width:110px; height:110px;"><img src="img/4.png"></div>
 </div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
 const vibes = [
     {
         title: "Thinkin Bout You",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/RgsZvjENnm0?si=RnRFeTV6mL4txicq" allowfullscreen></iframe>',
-        highlightLines: ["Do you not think so far ahead?", "'Cause I been thinkin' bout forever"]
+        videoId: "RgsZvjENnm0",
+        fullLyrics: [
+            "A tornado flew around my room before you came",
+            "Excuse the mess it made, it usually doesn't rain",
+            "In Southern California, much like Arizona",
+            "My eyes don't shed tears, but, boy,",
+            "they pour when I'm thinkin' 'bout you",
+            "",
+            "(Ooh, no, no, no)",
+            "I've been thinkin' 'bout you (You know, know, know)",
+            "I've been thinkin' 'bout you",
+            "Do you think about me still? Do ya, do ya?",
+            "",
+            "Or do you not think so far ahead?",
+            "'Cause I been thinkin' 'bout forever (Oooh, oooh)",
+            "",
+            "No, I don't like you,",
+            "I just thought you were cool enough to kick it",
+            "Got a beach house I could sell you in Idaho",
+            "Since you think I don't love you,",
+            "I just thought you were cute",
+            "That's why I kiss you",
+            "Got a fighter jet, I don't get to fly it, though",
+            "",
+            "I'm lyin' down thinkin' 'bout you",
+            "(Ooh, no, no, no)",
+            "I've been thinkin' 'bout you",
+            "(You know, know, know)",
+            "I've been thinkin' 'bout you",
+            "Do you think about me still?",
+            "Do ya, do ya?",
+            "",
+            "Or do you not think so far ahead? (Ahead)",
+            "'Cause I been thinkin' 'bout forever (Oooh, oooh)",
+            "",
+            "Yes, of course",
+            "I remember, how could I forget?",
+            "How you feel?",
+            "And though you were my first time",
+            "A new feel",
+            "It won't ever get old, not in my soul",
+            "Not in my spirit, keep it alive",
+            "We'll go down this road",
+            "'Til it turns from color to black and white",
+            "",
+            "Or do you not think so far ahead? (Ahead)",
+            "'Cause I been thinkin' 'bout forever (Oooh, oooh)"
+        ]
     },
     {
         title: "Pink + White",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/uzS3WG6__G4?si=p2QrImFktK8tGqvi" allowfullscreen></iframe>',
-        highlightLines: ["You showed me love when I wasn't feeling it", "Glory from above"]
+        videoId: "uzS3WG6__G4",
+        fullLyrics: [
+            "Yeah, yeah, uh (woo!)",
+            "Yeah, yeah, yeah",
+            "",
+            "That's the way every day goes",
+            "Every time we've no control",
+            "If the sky is pink and white",
+            "If the ground is black and yellow",
+            "It's the same way you showed me",
+            "Nod my head, don't close my eyes",
+            "Halfway on a slow move",
+            "It's the same way you showed me",
+            "If you could fly, then you'd feel south",
+            "Up north's getting cold soon",
+            "The way it is, we're on land",
+            "Still I'm someone to hold true",
+            "Keep you cool when it's still alive",
+            "Won't let you down when it's all ruin",
+            "",
+            "Just the same way you showed me, showed me",
+            "You showed me love",
+            "Glory from above",
+            "Regard, my dear",
+            "It's all downhill from here",
+            "",
+            "In the wake of a hurricane",
+            "Dark skin of a summer shade",
+            "Nosedive into flood lines",
+            "Tall tower of milk crates",
+            "It's the same way you showed me",
+            "Cannonball off the porch side",
+            "Older kids trying off the roof",
+            "Just the same way you showed me (You showed)",
+            "If you could die and come back to life",
+            "Up for air from the swimming pool",
+            "You'd kneel down to the dry land",
+            "Kiss the Earth that birthed you",
+            "Gave you tools just to stay alive",
+            "And make it out when the sun is ruined",
+            "",
+            "That's the same way you showed me, showed me",
+            "You showed me love",
+            "Glory from above",
+            "Regard, my dear",
+            "It's all downhill from here",
+            "",
+            "Remember life, remember how it was",
+            "Climb trees, Michael Jackson, it all ends here",
+            "Say what up to Matthew, to Shoob",
+            "Say what up to Danny",
+            "Say what up to life immortality",
+            "Bending up my Nikes",
+            "Running out the Melpomene, nicotine",
+            "Stealing granny cigs (Take it easy)",
+            "Gimme something sweet",
+            "Bitch, I might like immortality",
+            "This is life, life immortality"
+        ]
     },
     {
         title: "Godspeed",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/P18g4rKns6Q?si=Xvw51sZ6WF4gJTT-" allowfullscreen></iframe>',
-        highlightLines: ["I will always love you how I do", "And I let go of my claim on you"]
+        videoId: "P18g4rKns6Q",
+        fullLyrics: [
+            "I will always love you",
+            "How I do",
+            "Let go of a prayer for you",
+            "Just a sweet word",
+            "The table is prepared for you",
+            "Wishing you godspeed, glory",
+            "There will be mountains you won't move",
+            "Still, I'll always be there for you",
+            "How I do",
+            "I let go of my claim on you, it's a free world",
+            "You look down on where you came from sometimes",
+            "But you'll have this place to call home, always",
+            "This love will keep us through blinding of the eyes (oh)",
+            "Silence in the ears, darkness of the mind (until it's time)",
+            "This love will keep us through blinding of the eyes (oh, oh-oh)",
+            "Silence in the ears, darkness of the mind (oh, oh-oh, oh)",
+            "This love will keep us through blinding of the eyes (oh, until it's time we die)",
+            "Silence in the ears, darkness of the mind",
+            "Hmm-oh-oh, oh, oh-oh",
+            "I'll always love you until the time we die",
+            "Oh-oh, hmm"
+        ]
     }
 ];
 
 let current = 0;
-let karaokeIndex = 0;
-let karaokeInterval;
+let lyricsInterval;
+let player;
 
 const songTitle = document.getElementById("songTitle");
-const ytPlayerContainer = document.getElementById("ytPlayerContainer");
-const karaokeHighlight = document.getElementById("karaokeHighlight");
+const fullLyricsContainer = document.getElementById("fullLyricsContainer");
 
-function setVibe(index) {
+function onYouTubeIframeAPIReady() {
+    loadVibe(0);
+}
+
+function loadVibe(index) {
     current = (index + vibes.length) % vibes.length;
     const vibe = vibes[current];
     songTitle.textContent = vibe.title;
-    ytPlayerContainer.innerHTML = vibe.iframeHTML;
+    
+    // Clear previous lyrics
+    fullLyricsContainer.innerHTML = '';
+    
+    // Stop previous interval
+    clearInterval(lyricsInterval);
 
-    karaokeIndex = 0;
-    clearInterval(karaokeInterval);
-    karaokeHighlight.textContent = vibe.highlightLines[karaokeIndex];
-    karaokeHighlight.classList.add("active");
-
-    karaokeInterval = setInterval(() => {
-        karaokeHighlight.classList.remove("active");
-        setTimeout(() => {
-            karaokeIndex = (karaokeIndex + 1) % vibe.highlightLines.length;
-            karaokeHighlight.textContent = vibe.highlightLines[karaokeIndex];
-            karaokeHighlight.classList.add("active");
-        }, 500);
-    }, 4000);
+    // Create a new YouTube player instance
+    player = new YT.Player('ytPlayerContainer', {
+        height: '315',
+        width: '560',
+        videoId: vibe.videoId,
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
+    });
 }
 
-document.getElementById("prevBtn").addEventListener("click", () => setVibe(current - 1));
-document.getElementById("nextBtn").addEventListener("click", () => setVibe(current + 1));
+function onPlayerStateChange(event) {
+    // Check if the video is playing (state 1)
+    if (event.data === YT.PlayerState.PLAYING) {
+        // Start displaying lyrics only when the video plays
+        displayLyrics();
+    } else {
+        // Stop the lyrics animation if the video is paused, ended, etc.
+        clearInterval(lyricsInterval);
+    }
+}
 
-setVibe(0);
+function displayLyrics() {
+    const vibe = vibes[current];
+    let lineIndex = 0;
+
+    // Clear any previous lyrics interval
+    clearInterval(lyricsInterval);
+
+    // Function to display the next line with a delay
+    const displayNextLine = () => {
+        if (lineIndex < vibe.fullLyrics.length) {
+            const line = document.createElement('p');
+            line.textContent = vibe.fullLyrics[lineIndex];
+            fullLyricsContainer.appendChild(line);
+            fullLyricsContainer.scrollTop = fullLyricsContainer.scrollHeight;
+            lineIndex++;
+        } else {
+            // Stop the interval when all lines are displayed
+            clearInterval(lyricsInterval);
+        }
+    };
+    
+    // Set an interval to add each line of the lyrics
+    lyricsInterval = setInterval(displayNextLine, 3000);
+}
+
+document.getElementById("prevBtn").addEventListener("click", () => loadVibe(current - 1));
+document.getElementById("nextBtn").addEventListener("click", () => loadVibe(current + 1));
+
 </script>
 </body>
 </html>
