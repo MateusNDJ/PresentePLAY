@@ -36,7 +36,7 @@ body, html {
 
 .center-panel {
     position: relative;
-    z-index: 1;
+    z-index: 1; /* painel atrás do karaoke e fotos */
     width: 90%; /* Ajuste para ter mais espaço em telas menores */
     max-width: 800px;
     background: rgba(255, 255, 255, 0.1);
@@ -91,7 +91,7 @@ button.carousel-btn:hover {
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     animation: float 8s ease-in-out infinite alternate;
-    z-index: 2;
+    z-index: 2; /* below the karaoke */
     cursor: grab;
     border: 3px solid white;
 }
@@ -147,7 +147,7 @@ button.carousel-btn:hover {
 .emoji-loop {
     font-size: 1.5rem;
     margin-left: 10px;
-    width: 30px;
+    width: 30px; /* Fixed width to prevent shifting */
     text-align: left;
 }
 </style>
