@@ -1,227 +1,119 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Playlist Frank Ocean – para você</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root { --accent: #ff5277; }
-
-body, html {
-    margin: 0; padding: 0;
-    min-height: 100vh;
-    font-family: 'Arial', sans-serif;
-    background-image: url('background.png');
-    background-size: cover; background-position: center;
-    background-repeat: no-repeat; background-attachment: fixed;
-    position: relative; overflow-x: hidden;
-}
-
-/* ===== MODAL ===== */
-#startModal {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 1000;
-}
-.modal-content {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(12px);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    color: #fff;
-    max-width: 350px;
-    box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-}
-.modal-content p { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.4; }
-.modal-btn {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-.modal-btn:hover { background: #ff7899; }
-
-/* ===== PLAYER E CARROSSEL ===== */
-.stage { opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
-.stage.active { opacity: 1; pointer-events: auto; }
-
-.center-panel {
-    position: relative; z-index: 1;
-    width: 90%; max-width: 800px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px; border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-    margin: 20px auto;
-    max-height: calc(100vh - 40px); overflow-y: auto;
-}
-
-.center-panel h1 {
-    color: #fff; font-size: 2rem; margin-bottom: 15px;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-}
-
-#fullLyricsContainer {
-    color: #fff; text-align: center;
-    margin-top: 20px; font-size: 1rem; line-height: 1.5;
-    background: rgba(0,0,0,0.2);
-    border-radius: 10px; padding: 15px;
-}
-
-button.carousel-btn {
-    background: var(--accent); color: #fff;
-    border: none; padding: 10px 20px; margin: 10px;
-    border-radius: 8px; cursor: pointer; font-weight: bold;
-}
-button.carousel-btn:hover { background: #ff7899; }
-
-/* Floating Photos */
-.photo-frame {
-    position: absolute;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    animation: float 8s ease-in-out infinite alternate;
-    z-index: 0;
-    cursor: grab; border: 3px solid white;
-}
-.photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-@keyframes float {
-    0% { transform: translateY(0) rotate(0deg);}
-    50% { transform: translateY(-15px) rotate(5deg);}
-    100% { transform: translateY(0) rotate(0deg);}
-}
-
-#ytPlayerContainer {
-    position: relative; width: 100%;
-    padding-top: 56.25%; margin-bottom: 20px;
-    border-radius: 16px; overflow: hidden;
-}
-#ytPlayerContainer iframe {
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100%; border: none;
-}
-
-.special-title {
-    color: white; font-size: 1.5rem; font-weight: bold;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    margin-bottom: 10px; display: flex;
-    align-items: center; justify-content: center;
-}
-.emoji-loop { font-size: 1.5rem; margin-left: 10px; width: 30px; text-align: left; }
-</style>
-</head>
-<body>
-
-<!-- Modal inicial -->
-<div id="startModal">
-    <div class="modal-content">
-        <p>Posso ser distante às vezes, mas quero que saiba que em nenhuma vez você sai da minha cabeça.</p>
-        <button class="modal-btn" id="yesBtn">Eu sei</button>
-        <button class="modal-btn" id="noBtn">Não</button>
+<div id="cmc-overlay" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+">
+    <div id="cmc-alert" style="
+        background-color: #ff5277;
+        color: white;
+        padding: 25px 35px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        max-width: 80%;
+        margin: 20px;
+    ">
+        <p style="font-size: 1.2rem; margin-bottom: 20px;">
+            ⚠️ Posso ser ausente, mas quero que saiba que eu me importo com você. ❤️
+        </p>
+        <button id="cmc-yes" style="
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        ">
+            Sim, eu sei
+        </button>
+        <button id="cmc-no" style="
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: not-allowed;
+            font-weight: bold;
+            font-size: 1rem;
+        ">
+            Não
+        </button>
     </div>
 </div>
 
-<!-- Player e Carrossel -->
-<div class="stage" id="mainStage">
-    <div class="center-panel">
-        <div class="special-title">
-            Para a garota mais incrível que eu conheci
-            <span id="emojiLoop" class="emoji-loop"></span>
-        </div>
-        <h1 id="songTitle"></h1>
-        <div id="ytPlayerContainer"></div>
-        <div id="fullLyricsContainer"></div>
-        <button class="carousel-btn" id="prevBtn">Anterior</button>
-        <button class="carousel-btn" id="nextBtn">Próxima</button>
-    </div>
-
-    <!-- Fotos flutuantes -->
-    <div class="photo-frame" style="top:10%; left:5%; width:120px; height:120px;"><img src="img/1.png"></div>
-    <div class="photo-frame" style="top:25%; left:15%; width:140px; height:140px;"><img src="img/2.png"></div>
-    <div class="photo-frame" style="top:5%; right:10%; width:130px; height:130px;"><img src="img/3.png"></div>
-    <div class="photo-frame" style="top:30%; right:5%; width:110px; height:110px;"><img src="img/4.png"></div>
-    <div class="photo-frame" style="bottom:10%; left:5%; width:100px; height:100px;"><img src="img/5.png"></div>
-    <div class="photo-frame" style="bottom:25%; left:18%; width:150px; height:150px;"><img src="img/6.png"></div>
-    <div class="photo-frame" style="bottom:5%; right:15%; width:120px; height:120px;"><img src="img/7.png"></div>
-    <div class="photo-frame" style="bottom:20%; right:5%; width:140px; height:140px;"><img src="img/8.png"></div>
-    <div class="photo-frame" style="top:40%; left:4%; width:110px; height:110px;"><img src="img/9.png"></div>
-    <div class="photo-frame" style="top:55%; right:4%; width:130px; height:130px;"><img src="img/10.png"></div>
-</div>
-
-<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-const vibes = [/* --- SUA LISTA DE MÚSICAS INTACTA --- */];
-// (mesma lista do seu código original)
-
-let current = 0, lyricsInterval, player;
-const songTitle = document.getElementById("songTitle");
-const fullLyricsContainer = document.getElementById("fullLyricsContainer");
-
-function onYouTubeIframeAPIReady() { loadVibe(0); }
-function loadVibe(index) {
-    current = (index + vibes.length) % vibes.length;
-    const vibe = vibes[current];
-    songTitle.textContent = vibe.title;
-    fullLyricsContainer.innerHTML = '';
-    clearInterval(lyricsInterval);
-    if (player) player.destroy();
-    player = new YT.Player('ytPlayerContainer', {
-        videoId: vibe.videoId, playerVars: { controls: 1 },
-        events: { 'onStateChange': onPlayerStateChange }
+    document.getElementById('cmc-yes').addEventListener('click', function() {
+        document.getElementById('cmc-overlay').style.display = 'none';
     });
-}
-function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.PLAYING) startDisplayingLyrics();
-    else clearInterval(lyricsInterval);
-}
-function startDisplayingLyrics() {
-    const vibe = vibes[current];
-    fullLyricsContainer.innerHTML = '';
-    clearInterval(lyricsInterval);
-    let lineIndex = 0;
-    lyricsInterval = setInterval(() => {
-        if (lineIndex < vibe.fullLyrics.length) {
-            const line = document.createElement('p');
-            line.textContent = vibe.fullLyrics[lineIndex];
-            fullLyricsContainer.appendChild(line);
-            fullLyricsContainer.scrollTop = fullLyricsContainer.scrollHeight;
-            lineIndex++;
-        }
-    }, 3000);
-}
-document.getElementById("prevBtn").addEventListener("click", () => loadVibe(current - 1));
-document.getElementById("nextBtn").addEventListener("click", () => loadVibe(current + 1));
+    // O botão 'Não' não fará nada, conforme sua solicitação.
+</script><div id="cmc-overlay" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+">
+    <div id="cmc-alert" style="
+        background-color: #ff5277;
+        color: white;
+        padding: 25px 35px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        max-width: 80%;
+        margin: 20px;
+    ">
+        <p style="font-size: 1.2rem; margin-bottom: 20px;">
+            ⚠️ Posso ser ausente, mas quero que saiba que eu me importo com você. ❤️
+        </p>
+        <button id="cmc-yes" style="
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        ">
+            Sim, eu sei
+        </button>
+        <button id="cmc-no" style="
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: not-allowed;
+            font-weight: bold;
+            font-size: 1rem;
+        ">
+            Não
+        </button>
+    </div>
+</div>
 
-const emojiElement = document.getElementById("emojiLoop");
-const emojis = ["❤️", "✨", "🥰", "🌹"];
-let emojiIndex = 0;
-setInterval(() => {
-    emojiElement.textContent = emojis[emojiIndex];
-    emojiIndex = (emojiIndex + 1) % emojis.length;
-}, 1000);
-
-/* MODAL LÓGICA */
-const modal = document.getElementById("startModal");
-const stage = document.getElementById("mainStage");
-document.getElementById("yesBtn").addEventListener("click", () => {
-    modal.style.display = "none";
-    stage.classList.add("active");
-});
-document.getElementById("noBtn").addEventListener("click", () => {
-    alert("ent fds");
-    modal.style.display = "none";
-});
+<script>
+    document.getElementById('cmc-yes').addEventListener('click', function() {
+        document.getElementById('cmc-overlay').style.display = 'none';
+    });
+    // O botão 'Não' não fará nada, conforme sua solicitação.
 </script>
-</body>
-</html>
