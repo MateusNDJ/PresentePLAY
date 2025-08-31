@@ -37,8 +37,8 @@ body, html {
 .center-panel {
     position: relative;
     z-index: 1;
-    width: 60%;
-    max-width: 800px;
+    width: 80%;
+    max-width: 900px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     padding: 40px;
@@ -60,7 +60,7 @@ body, html {
     margin-top: 20px;
     font-size: 1rem;
     line-height: 1.5;
-    max-height: 300px;
+    max-height: 350px;
     overflow-y: auto;
     padding-right: 15px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -120,7 +120,11 @@ button.carousel-btn:hover {
     margin-bottom: 20px;
     border-radius: 16px;
     overflow: hidden;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 #ytPlayerContainer iframe {
     position: absolute;
     top: 0;
@@ -296,26 +300,35 @@ const vibes = [
 let current = 0;
 let lyricsInterval;
 let player;
+let playerReady = false;
 
 const songTitle = document.getElementById("songTitle");
 const fullLyricsContainer = document.getElementById("fullLyricsContainer");
 
+// Esta função é chamada automaticamente quando a API do YouTube está pronta.
 function onYouTubeIframeAPIReady() {
+    playerReady = true;
     loadVibe(0);
 }
 
+// Esta função cria ou recarrega o player e o conteúdo da música.
 function loadVibe(index) {
     current = (index + vibes.length) % vibes.length;
     const vibe = vibes[current];
     songTitle.textContent = vibe.title;
     
-    // Clear previous lyrics
+    // Limpa as letras anteriores
     fullLyricsContainer.innerHTML = '';
     
-    // Stop previous interval
+    // Para o intervalo anterior, se houver
     clearInterval(lyricsInterval);
-
-    // Create a new YouTube player instance
+    
+    // Verifica se o player já existe e o destrói para criar um novo.
+    if (player) {
+        player.destroy();
+    }
+    
+    // Cria uma nova instância do player do YouTube.
     player = new YT.Player('ytPlayerContainer', {
         height: '315',
         width: '560',
@@ -327,12 +340,12 @@ function loadVibe(index) {
 }
 
 function onPlayerStateChange(event) {
-    // Check if the video is playing (state 1)
+    // Verifica se o vídeo está tocando (estado 1)
     if (event.data === YT.PlayerState.PLAYING) {
-        // Start displaying lyrics only when the video plays
+        // Inicia a exibição das letras apenas quando o vídeo é iniciado.
         displayLyrics();
     } else {
-        // Stop the lyrics animation if the video is paused, ended, etc.
+        // Para a animação das letras se o vídeo for pausado, encerrado, etc.
         clearInterval(lyricsInterval);
     }
 }
@@ -341,10 +354,10 @@ function displayLyrics() {
     const vibe = vibes[current];
     let lineIndex = 0;
 
-    // Clear any previous lyrics interval
+    // Limpa qualquer intervalo de letras anterior
     clearInterval(lyricsInterval);
 
-    // Function to display the next line with a delay
+    // Função para exibir a próxima linha com um atraso
     const displayNextLine = () => {
         if (lineIndex < vibe.fullLyrics.length) {
             const line = document.createElement('p');
@@ -353,18 +366,27 @@ function displayLyrics() {
             fullLyricsContainer.scrollTop = fullLyricsContainer.scrollHeight;
             lineIndex++;
         } else {
-            // Stop the interval when all lines are displayed
+            // Para o intervalo quando todas as linhas forem exibidas
             clearInterval(lyricsInterval);
         }
     };
     
-    // Set an interval to add each line of the lyrics
+    // Define um intervalo para adicionar cada linha da letra
     lyricsInterval = setInterval(displayNextLine, 3000);
 }
 
-document.getElementById("prevBtn").addEventListener("click", () => loadVibe(current - 1));
-document.getElementById("nextBtn").addEventListener("click", () => loadVibe(current + 1));
+// Event listeners para os botões "Anterior" e "Próxima"
+document.getElementById("prevBtn").addEventListener("click", () => {
+    if (playerReady) {
+        loadVibe(current - 1);
+    }
+});
 
+document.getElementById("nextBtn").addEventListener("click", () => {
+    if (playerReady) {
+        loadVibe(current + 1);
+    }
+});
 </script>
 </body>
 </html>
