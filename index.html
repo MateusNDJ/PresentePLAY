@@ -7,198 +7,214 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
-    --accent: #d25c61;
+    --accent: #d25c61;
 }
 
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Playfair Display', serif;
-    overflow: hidden;
-    background-image: linear-gradient(to bottom right, #f8c4c4, #f4e8d2, #d2b4de);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Playfair Display', serif;
+    overflow: hidden; /* Garante que não haja scroll */
+    background-image: linear-gradient(to bottom right, #f8c4c4, #f4e8d2, #d2b4de);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
 }
 
 .stage {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .center-panel {
-    position: relative;
-    z-index: 1;
-    width: 90%;
-    max-width: 800px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10; /* Aumenta o z-index para garantir que fique acima das fotos */
+    width: 90%;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    margin-top: -50px; /* Ajusta a posição vertical do painel, se necessário */
 }
 
 .center-panel h1 {
-    color: #fff;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 1.8rem; /* Ligeiramente maior para desktop */
+    margin-bottom: 15px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .karaoke-highlight {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
-    text-align: center;
-    z-index: 5;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    pointer-events: none;
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente na tela */
+    left: 50%; /* Centraliza horizontalmente na tela */
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem; /* Um pouco maior para desktop */
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
+    text-align: center;
+    z-index: 15; /* Acima do painel e das fotos */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none; /* Permite clicar através do texto */
+    width: 80%; /* Garante que o texto não ultrapasse a tela */
+    max-width: 700px;
+    line-height: 1.3; /* Espaçamento entre as linhas */
 }
 
 .karaoke-highlight.active {
-    opacity: 1;
+    opacity: 1;
 }
 
 button.carousel-btn {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease; /* Transição suave no hover */
 }
 button.carousel-btn:hover {
-    background: #ff7899;
+    background: #ff7899;
 }
 
 .photo-frame {
-    position: absolute;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    animation: float 8s ease-in-out infinite alternate;
-    z-index: 2;
-    cursor: grab;
-    border: 3px solid white;
+    position: absolute;
+    border-radius: 4px; /* Cantos levemente arredondados */
+    overflow: hidden;
+    background: white; /* Fundo branco para o efeito Polaroid */
+    padding: 5px 5px 20px 5px; /* Espaço para o "rodapé" da Polaroid */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Sombra suave */
+    animation: float 8s ease-in-out infinite alternate;
+    z-index: 5; /* Abaixo do painel central */
+    cursor: grab;
+    border: none; /* Remove a borda original */
+    box-sizing: border-box; /* Garante que padding não aumente o tamanho total */
 }
 
 .photo-frame.dragging {
-    cursor: grabbing;
-    animation: none;
-    z-index: 3;
+    cursor: grabbing;
+    animation: none;
+    z-index: 6; /* Mais alto quando arrastando */
 }
 
 .photo-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* Remove espaço extra abaixo da imagem */
 }
 
 @keyframes float {
-    0% { transform: translateY(0px) rotate(0deg);}
-    50% { transform: translateY(-15px) rotate(5deg);}
-    100% { transform: translateY(0px) rotate(0deg);}
+    0% { transform: translateY(0px) rotate(var(--rotate, 0deg));}
+    50% { transform: translateY(-15px) rotate(var(--rotate, 5deg));}
+    100% { transform: translateY(0px) rotate(var(--rotate, 0deg));}
 }
 
 #ytPlayerContainer {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    margin-bottom: 20px;
-    border-radius: 16px;
-    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* Proporção de aspecto 16:9 para o vídeo */
+    margin-bottom: 20px;
+    border-radius: 16px;
+    overflow: hidden;
 }
 #ytPlayerContainer iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 /* --- ESTILOS PARA CELULAR --- */
-
 @media (max-width: 768px) {
-    .center-panel {
-        width: 95%;
-        padding: 20px;
-    }
+    .center-panel {
+        width: 95%;
+        padding: 20px;
+        margin-top: 0; /* Remove o ajuste de margem para celular */
+    }
 
-    .center-panel h1 {
-        font-size: 1.2rem;
-    }
+    .center-panel h1 {
+        font-size: 1.2rem;
+    }
 
-    .karaoke-highlight {
-        font-size: 1.5rem;
-    }
+    .karaoke-highlight {
+        font-size: 1.5rem;
+        top: 65%; /* Ajusta a posição do karaokê para não cobrir o vídeo */
+    }
 
-    button.carousel-btn {
-        font-size: 0.9rem;
-        padding: 8px 16px;
-    }
+    button.carousel-btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
 
-    .photo-frame {
-        display: none; /* ESCONDE AS FOTOS EM CELULAR */
-    }
+    .photo-frame {
+        display: none; /* ESCONDE AS FOTOS EM CELULAR */
+    }
+
+    body {
+        /* Garante que o conteúdo role no celular, se for muito grande */
+        overflow-y: auto;
+    }
 }
 </style>
 </head>
 <body>
 
 <div class="stage">
-    <div class="center-panel" id="panel">
-        <h1 id="songTitle"></h1>
-        <div id="ytPlayerContainer"></div>
-        <button class="carousel-btn" id="prevBtn">Anterior</button>
-        <button class="carousel-btn" id="nextBtn">Próxima</button>
-    </div>
+    <div class="center-panel" id="panel">
+        <h1 id="songTitle"></h1>
+        <p style="color: #fff; font-size: 1rem; margin-top: -10px; margin-bottom: 20px; text-shadow: 0 1px 5px rgba(0,0,0,0.4);">Para o meu amor, com carinho. ✨</p>
+        <div id="ytPlayerContainer"></div>
+        <button class="carousel-btn" id="prevBtn">Anterior</button>
+        <button class="carousel-btn" id="nextBtn">Próxima</button>
+    </div>
 
-        <div class="karaoke-highlight" id="karaokeHighlight"></div>
+    <div class="karaoke-highlight" id="karaokeHighlight"></div>
 
-        <div class="photo-frame" style="top:10%; left:5%; width:120px; height:120px;"><img src="img/1.png"></div>
-    <div class="photo-frame" style="top:20%; right:10%; width:140px; height:140px;"><img src="img/2.png"></div>
-    <div class="photo-frame" style="bottom:15%; left:25%; width:130px; height:130px;"><img src="img/3.png"></div>
-    <div class="photo-frame" style="bottom:10%; right:20%; width:110px; height:110px;"><img src="img/4.png"></div>
-    <div class="photo-frame" style="top:50%; left:15%; width:125px; height:125px;"><img src="img/5.png"></div>
-    <div class="photo-frame" style="top:35%; right:25%; width:100px; height:100px;"><img src="img/6.png"></div>
-    <div class="photo-frame" style="bottom:30%; left:40%; width:135px; height:135px;"><img src="img/7.png"></div>
+    <div class="photo-frame" style="top:10%; left:5%; width:120px; height:120px; --rotate: -5deg;"><img src="img/1.png"></div>
+    <div class="photo-frame" style="top:20%; right:10%; width:140px; height:140px; --rotate: 8deg;"><img src="img/2.png"></div>
+    <div class="photo-frame" style="bottom:15%; left:25%; width:130px; height:130px; --rotate: -3deg;"><img src="img/3.png"></div>
+    <div class="photo-frame" style="bottom:10%; right:20%; width:110px; height:110px; --rotate: 10deg;"><img src="img/4.png"></div>
+    <div class="photo-frame" style="top:50%; left:15%; width:125px; height:125px; --rotate: 2deg;"><img src="img/5.png"></div>
+    <div class="photo-frame" style="top:35%; right:25%; width:100px; height:100px; --rotate: -7deg;"><img src="img/6.png"></div>
+    <div class="photo-frame" style="bottom:30%; left:40%; width:135px; height:135px; --rotate: 5deg;"><img src="img/7.png"></div>
 </div>
 
 <script>
 const vibes = [
-    {
-        title: "Thinkin Bout You",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/RgsZvjENnm0?si=RnRFeTV6mL4txicq" allowfullscreen></iframe>',
-        highlightLines: ["Do you not think so far ahead?", "'Cause I been thinkin' bout forever"]
-    },
-    {
-        title: "Pink + White",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/uzS3WG6__G4?si=p2QrImFktK8tGqvi" allowfullscreen></iframe>',
-        highlightLines: ["You showed me love when I wasn't feeling it", "Glory from above"]
-    },
-    {
-        title: "Godspeed",
-        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/P18g4rKns6Q?si=Xvw51sZ6WF4gJTT-" allowfullscreen></iframe>',
-        highlightLines: ["I will always love you how I do", "And I let go of my claim on you"]
-    }
+    {
+        title: "Thinkin Bout You",
+        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/RgsZvjENnm0?si=RnRFeTV6mL4txicq" allowfullscreen></iframe>',
+        highlightLines: ["Do you not think so far ahead?", "'Cause I been thinkin' bout forever"]
+    },
+    {
+        title: "Pink + White",
+        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/uzS3WG6__G4?si=p2QrImFktK8tGqvi" allowfullscreen></iframe>',
+        highlightLines: ["You showed me love when I wasn't feeling it", "Glory from above"]
+    },
+    {
+        title: "Godspeed",
+        iframeHTML: '<iframe width="560" height="315" src="https://www.youtube.com/embed/P18g4rKns6Q?si=Xvw51sZ6WF4gJTT-" allowfullscreen></iframe>',
+        highlightLines: ["I will always love you how I do", "And I let go of my claim on you"]
+    }
 ];
 
 let current = 0;
@@ -210,24 +226,24 @@ const ytPlayerContainer = document.getElementById("ytPlayerContainer");
 const karaokeHighlight = document.getElementById("karaokeHighlight");
 
 function setVibe(index) {
-    current = (index + vibes.length) % vibes.length;
-    const vibe = vibes[current];
-    songTitle.textContent = vibe.title;
-    ytPlayerContainer.innerHTML = vibe.iframeHTML;
+    current = (index + vibes.length) % vibes.length;
+    const vibe = vibes[current];
+    songTitle.textContent = vibe.title;
+    ytPlayerContainer.innerHTML = vibe.iframeHTML;
 
-    karaokeIndex = 0;
-    clearInterval(karaokeInterval);
-    karaokeHighlight.textContent = vibe.highlightLines[karaokeIndex];
-    karaokeHighlight.classList.add("active");
+    karaokeIndex = 0;
+    clearInterval(karaokeInterval);
+    karaokeHighlight.textContent = vibe.highlightLines[karaokeIndex];
+    karaokeHighlight.classList.add("active");
 
-    karaokeInterval = setInterval(() => {
-        karaokeHighlight.classList.remove("active");
-        setTimeout(() => {
-            karaokeIndex = (karaokeIndex + 1) % vibe.highlightLines.length;
-            karaokeHighlight.textContent = vibe.highlightLines[karaokeIndex];
-            karaokeHighlight.classList.add("active");
-        }, 500);
-    }, 4000);
+    karaokeInterval = setInterval(() => {
+        karaokeHighlight.classList.remove("active");
+        setTimeout(() => {
+            karaokeIndex = (karaokeIndex + 1) % vibe.highlightLines.length;
+            karaokeHighlight.textContent = vibe.highlightLines[karaokeIndex];
+            karaokeHighlight.classList.add("active");
+        }, 500);
+    }, 4000);
 }
 
 document.getElementById("prevBtn").addEventListener("click", () => setVibe(current - 1));
