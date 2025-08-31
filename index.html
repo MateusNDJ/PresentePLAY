@@ -36,7 +36,7 @@ body, html {
 
 .center-panel {
     position: relative;
-    z-index: 1; /* painel atrás do karaoke e fotos */
+    z-index: 1;
     width: 60%;
     max-width: 800px;
     background: rgba(255, 255, 255, 0.1);
@@ -60,16 +60,16 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3rem; /* Tamanho da fonte grande */
+    font-size: 3rem;
     font-weight: bold;
     color: #fff;
     text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
     text-align: center;
-    z-index: 5; /* Sobreposto a tudo */
+    z-index: 5;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     pointer-events: none;
-    max-width: 90%; /* Limita a largura para evitar quebras de linha muito longas */
+    max-width: 90%;
     line-height: 1.2;
 }
 
@@ -98,7 +98,7 @@ button.carousel-btn:hover {
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     animation: float 8s ease-in-out infinite alternate;
-    z-index: 2; /* abaixo do karaoke */
+    z-index: 2;
     cursor: grab;
     border: 3px solid white;
 }
@@ -123,15 +123,11 @@ button.carousel-btn:hover {
 
 #ytPlayerContainer {
     position: relative;
-    width: 100%; /* Ocupa a largura total do center-panel */
+    width: 100%;
     padding-top: 56.25%; /* Proporção 16:9 */
     margin-bottom: 20px;
     border-radius: 16px;
     overflow: hidden;
-    max-width: 640px; /* Largura máxima para o player, ajuste conforme seu gosto */
-    height: auto; /* Altura automática para manter a proporção */
-    margin-left: auto; /* Centraliza o player */
-    margin-right: auto; /* Centraliza o player */
 }
 #ytPlayerContainer iframe {
     position: absolute;
@@ -168,140 +164,140 @@ const vibes = [
         title: "Thinkin Bout You",
         videoId: "RgsZvjENnm0",
         fullLyrics: [
-            "A tornado flew around my room before you came",
-            "Excuse the mess it made, it usually doesn't rain",
-            "In Southern California, much like Arizona",
-            "My eyes don't shed tears, but, boy,",
-            "they pour when I'm thinkin' 'bout you",
-            "",
-            "(Ooh, no, no, no)",
-            "I've been thinkin' 'bout you (You know, know, know)",
-            "I've been thinkin' 'bout you",
-            "Do you think about me still? Do ya, do ya?",
-            "",
-            "Or do you not think so far ahead?",
-            "'Cause I been thinkin' 'bout forever (Oooh, oooh)",
-            "",
-            "No, I don't like you,",
-            "I just thought you were cool enough to kick it",
-            "Got a beach house I could sell you in Idaho",
-            "Since you think I don't love you,",
-            "I just thought you were cute",
-            "That's why I kiss you",
-            "Got a fighter jet, I don't get to fly it, though",
-            "",
-            "I'm lyin' down thinkin' 'bout you",
-            "(Ooh, no, no, no)",
-            "I've been thinkin' 'bout you",
-            "(You know, know, know)",
-            "I've been thinkin' 'bout you",
-            "Do you think about me still?",
-            "Do ya, do ya?",
-            "",
-            "Or do you not think so far ahead? (Ahead)",
-            "'Cause I been thinkin' 'bout forever (Oooh, oooh)",
-            "",
-            "Yes, of course",
-            "I remember, how could I forget?",
-            "How you feel?",
-            "And though you were my first time",
-            "A new feel",
-            "It won't ever get old, not in my soul",
-            "Not in my spirit, keep it alive",
-            "We'll go down this road",
-            "'Til it turns from color to black and white",
-            "",
-            "Or do you not think so far ahead? (Ahead)",
-            "'Cause I been thinkin' 'bout forever (Oooh, oooh)"
+            {time: 2.0, text: "A tornado flew around my room before you came"},
+            {time: 5.7, text: "Excuse the mess it made, it usually doesn't rain"},
+            {time: 9.2, text: "In Southern California, much like Arizona"},
+            {time: 12.8, text: "My eyes don't shed tears, but, boy,"},
+            {time: 15.0, text: "they pour when I'm thinkin' 'bout you"},
+            {time: 17.5, text: ""},
+            {time: 17.8, text: "(Ooh, no, no, no)"},
+            {time: 20.0, text: "I've been thinkin' 'bout you (You know, know, know)"},
+            {time: 22.8, text: "I've been thinkin' 'bout you"},
+            {time: 25.0, text: "Do you think about me still? Do ya, do ya?"},
+            {time: 28.0, text: ""},
+            {time: 30.5, text: "Or do you not think so far ahead?"},
+            {time: 34.0, text: "'Cause I been thinkin' 'bout forever (Oooh, oooh)"},
+            {time: 37.0, text: ""},
+            {time: 42.5, text: "No, I don't like you,"},
+            {time: 44.5, text: "I just thought you were cool enough to kick it"},
+            {time: 47.7, text: "Got a beach house I could sell you in Idaho"},
+            {time: 50.8, text: "Since you think I don't love you,"},
+            {time: 52.5, text: "I just thought you were cute"},
+            {time: 54.0, text: "That's why I kiss you"},
+            {time: 56.0, text: "Got a fighter jet, I don't get to fly it, though"},
+            {time: 59.0, text: ""},
+            {time: 104.5, text: "I'm lyin' down thinkin' 'bout you"},
+            {time: 106.5, text: "(Ooh, no, no, no)"},
+            {time: 109.0, text: "I've been thinkin' 'bout you"},
+            {time: 111.0, text: "(You know, know, know)"},
+            {time: 112.5, text: "I've been thinkin' 'bout you"},
+            {time: 115.0, text: "Do you think about me still?"},
+            {time: 117.0, text: "Do ya, do ya?"},
+            {time: 118.5, text: ""},
+            {time: 121.5, text: "Or do you not think so far ahead? (Ahead)"},
+            {time: 125.0, text: "'Cause I been thinkin' 'bout forever (Oooh, oooh)"},
+            {time: 128.0, text: ""},
+            {time: 133.5, text: "Yes, of course"},
+            {time: 135.5, text: "I remember, how could I forget?"},
+            {time: 138.0, text: "How you feel?"},
+            {time: 139.5, text: "And though you were my first time"},
+            {time: 142.0, text: "A new feel"},
+            {time: 144.5, text: "It won't ever get old, not in my soul"},
+            {time: 147.0, text: "Not in my spirit, keep it alive"},
+            {time: 149.0, text: "We'll go down this road"},
+            {time: 151.0, text: "'Til it turns from color to black and white"},
+            {time: 154.0, text: ""},
+            {time: 157.0, text: "Or do you not think so far ahead? (Ahead)"},
+            {time: 161.0, text: "'Cause I been thinkin' 'bout forever (Oooh, oooh)"}
         ]
     },
     {
         title: "Pink + White",
         videoId: "uzS3WG6__G4",
         fullLyrics: [
-            "Yeah, yeah, uh (woo!)",
-            "Yeah, yeah, yeah",
-            "",
-            "That's the way every day goes",
-            "Every time we've no control",
-            "If the sky is pink and white",
-            "If the ground is black and yellow",
-            "It's the same way you showed me",
-            "Nod my head, don't close my eyes",
-            "Halfway on a slow move",
-            "It's the same way you showed me",
-            "If you could fly, then you'd feel south",
-            "Up north's getting cold soon",
-            "The way it is, we're on land",
-            "Still I'm someone to hold true",
-            "Keep you cool when it's still alive",
-            "Won't let you down when it's all ruin",
-            "",
-            "Just the same way you showed me, showed me",
-            "You showed me love",
-            "Glory from above",
-            "Regard, my dear",
-            "It's all downhill from here",
-            "",
-            "In the wake of a hurricane",
-            "Dark skin of a summer shade",
-            "Nosedive into flood lines",
-            "Tall tower of milk crates",
-            "It's the same way you showed me",
-            "Cannonball off the porch side",
-            "Older kids trying off the roof",
-            "Just the same way you showed me (You showed)",
-            "If you could die and come back to life",
-            "Up for air from the swimming pool",
-            "You'd kneel down to the dry land",
-            "Kiss the Earth that birthed you",
-            "Gave you tools just to stay alive",
-            "And make it out when the sun is ruined",
-            "",
-            "That's the same way you showed me, showed me",
-            "You showed me love",
-            "Glory from above",
-            "Regard, my dear",
-            "It's all downhill from here",
-            "",
-            "Remember life, remember how it was",
-            "Climb trees, Michael Jackson, it all ends here",
-            "Say what up to Matthew, to Shoob",
-            "Say what up to Danny",
-            "Say what up to life immortality",
-            "Bending up my Nikes",
-            "Running out the Melpomene, nicotine",
-            "Stealing granny cigs (Take it easy)",
-            "Gimme something sweet",
-            "Bitch, I might like immortality",
-            "This is life, life immortality"
+            {time: 0.0, text: "Yeah, yeah, uh (woo!)"},
+            {time: 1.5, text: "Yeah, yeah, yeah"},
+            {time: 2.5, text: ""},
+            {time: 3.5, text: "That's the way every day goes"},
+            {time: 5.0, text: "Every time we've no control"},
+            {time: 7.0, text: "If the sky is pink and white"},
+            {time: 9.0, text: "If the ground is black and yellow"},
+            {time: 11.0, text: "It's the same way you showed me"},
+            {time: 13.0, text: "Nod my head, don't close my eyes"},
+            {time: 15.0, text: "Halfway on a slow move"},
+            {time: 17.0, text: "It's the same way you showed me"},
+            {time: 19.0, text: "If you could fly, then you'd feel south"},
+            {time: 21.0, text: "Up north's getting cold soon"},
+            {time: 23.0, text: "The way it is, we're on land"},
+            {time: 25.0, text: "Still I'm someone to hold true"},
+            {time: 27.0, text: "Keep you cool when it's still alive"},
+            {time: 29.0, text: "Won't let you down when it's all ruin"},
+            {time: 31.0, text: ""},
+            {time: 32.5, text: "Just the same way you showed me, showed me"},
+            {time: 35.0, text: "You showed me love"},
+            {time: 37.0, text: "Glory from above"},
+            {time: 39.0, text: "Regard, my dear"},
+            {time: 41.0, text: "It's all downhill from here"},
+            {time: 43.0, text: ""},
+            {time: 44.0, text: "In the wake of a hurricane"},
+            {time: 46.0, text: "Dark skin of a summer shade"},
+            {time: 48.0, text: "Nosedive into flood lines"},
+            {time: 50.0, text: "Tall tower of milk crates"},
+            {time: 52.0, text: "It's the same way you showed me"},
+            {time: 54.0, text: "Cannonball off the porch side"},
+            {time: 56.0, text: "Older kids trying off the roof"},
+            {time: 58.0, text: "Just the same way you showed me (You showed)"},
+            {time: 60.5, text: "If you could die and come back to life"},
+            {time: 63.0, text: "Up for air from the swimming pool"},
+            {time: 65.0, text: "You'd kneel down to the dry land"},
+            {time: 67.0, text: "Kiss the Earth that birthed you"},
+            {time: 69.0, text: "Gave you tools just to stay alive"},
+            {time: 71.0, text: "And make it out when the sun is ruined"},
+            {time: 73.0, text: ""},
+            {time: 74.5, text: "That's the same way you showed me, showed me"},
+            {time: 77.0, text: "You showed me love"},
+            {time: 79.0, text: "Glory from above"},
+            {time: 81.0, text: "Regard, my dear"},
+            {time: 83.0, text: "It's all downhill from here"},
+            {time: 85.0, text: ""},
+            {time: 90.0, text: "Remember life, remember how it was"},
+            {time: 93.0, text: "Climb trees, Michael Jackson, it all ends here"},
+            {time: 96.0, text: "Say what up to Matthew, to Shoob"},
+            {time: 98.0, text: "Say what up to Danny"},
+            {time: 100.0, text: "Say what up to life immortality"},
+            {time: 102.5, text: "Bending up my Nikes"},
+            {time: 105.0, text: "Running out the Melpomene, nicotine"},
+            {time: 107.5, text: "Stealing granny cigs (Take it easy)"},
+            {time: 110.0, text: "Gimme something sweet"},
+            {time: 112.0, text: "Bitch, I might like immortality"},
+            {time: 115.0, text: "This is life, life immortality"}
         ]
     },
     {
         title: "Godspeed",
         videoId: "P18g4rKns6Q",
         fullLyrics: [
-            "I will always love you",
-            "How I do",
-            "Let go of a prayer for you",
-            "Just a sweet word",
-            "The table is prepared for you",
-            "Wishing you godspeed, glory",
-            "There will be mountains you won't move",
-            "Still, I'll always be there for you",
-            "How I do",
-            "I let go of my claim on you, it's a free world",
-            "You look down on where you came from sometimes",
-            "But you'll have this place to call home, always",
-            "This love will keep us through blinding of the eyes (oh)",
-            "Silence in the ears, darkness of the mind (until it's time)",
-            "This love will keep us through blinding of the eyes (oh, oh-oh)",
-            "Silence in the ears, darkness of the mind (oh, oh-oh, oh)",
-            "This love will keep us through blinding of the eyes (oh, until it's time we die)",
-            "Silence in the ears, darkness of the mind",
-            "Hmm-oh-oh, oh, oh-oh",
-            "I'll always love you until the time we die",
-            "Oh-oh, hmm"
+            {time: 3.5, text: "I will always love you"},
+            {time: 6.0, text: "How I do"},
+            {time: 8.5, text: "Let go of a prayer for you"},
+            {time: 11.0, text: "Just a sweet word"},
+            {time: 13.0, text: "The table is prepared for you"},
+            {time: 16.0, text: "Wishing you godspeed, glory"},
+            {time: 19.5, text: "There will be mountains you won't move"},
+            {time: 22.0, text: "Still, I'll always be there for you"},
+            {time: 25.0, text: "How I do"},
+            {time: 27.0, text: "I let go of my claim on you, it's a free world"},
+            {time: 31.0, text: "You look down on where you came from sometimes"},
+            {time: 35.0, text: "But you'll have this place to call home, always"},
+            {time: 38.5, text: "This love will keep us through blinding of the eyes (oh)"},
+            {time: 43.0, text: "Silence in the ears, darkness of the mind (until it's time)"},
+            {time: 46.5, text: "This love will keep us through blinding of the eyes (oh, oh-oh)"},
+            {time: 51.5, text: "Silence in the ears, darkness of the mind (oh, oh-oh, oh)"},
+            {time: 55.5, text: "This love will keep us through blinding of the eyes (oh, until it's time we die)"},
+            {time: 60.5, text: "Silence in the ears, darkness of the mind"},
+            {time: 63.5, text: "Hmm-oh-oh, oh, oh-oh"},
+            {time: 67.5, text: "I'll always love you until the time we die"},
+            {time: 72.0, text: "Oh-oh, hmm"}
         ]
     }
 ];
@@ -323,33 +319,27 @@ function loadVibe(index) {
     const vibe = vibes[current];
     songTitle.textContent = vibe.title;
 
-    // Limpa o destaque anterior e para o intervalo de letras
     karaokeHighlight.classList.remove("active");
     clearInterval(lyricsInterval);
-    
-    // Zera o índice da letra
     lyricsIndex = 0;
     
     if (player) {
         player.destroy();
-        player = null; // Garante que o objeto do player seja nulo após a destruição
     }
 
-    // Cria uma nova instância do player do YouTube
+    // Cria uma nova instância do player do YouTube.
     player = new YT.Player('ytPlayerContainer', {
         height: '315',
         width: '560',
         videoId: vibe.videoId,
+        playerVars: {
+            'autoplay': 0, // Inicia pausado
+            'controls': 1 // Mostra os controles do player
+        },
         events: {
-            'onStateChange': onPlayerStateChange,
-            'onReady': onPlayerReady
+            'onStateChange': onPlayerStateChange
         }
     });
-}
-
-function onPlayerReady(event) {
-    // Garante que o player esteja pronto antes de interagir
-    console.log('Player está pronto!');
 }
 
 function onPlayerStateChange(event) {
@@ -366,22 +356,16 @@ function displayKaraokeLyrics() {
     clearInterval(lyricsInterval);
     lyricsIndex = 0;
 
-    const showNextLyricLine = () => {
-        if (lyricsIndex < vibe.fullLyrics.length) {
-            karaokeHighlight.classList.remove("active");
-            setTimeout(() => {
-                karaokeHighlight.textContent = vibe.fullLyrics[lyricsIndex];
-                karaokeHighlight.classList.add("active");
-                lyricsIndex++;
-            }, 500);
-        } else {
-            clearInterval(lyricsInterval);
-            karaokeHighlight.classList.remove("active");
+    lyricsInterval = setInterval(() => {
+        const currentTime = player.getCurrentTime();
+
+        if (lyricsIndex < vibe.fullLyrics.length && currentTime >= vibe.fullLyrics[lyricsIndex].time) {
+            karaokeHighlight.textContent = vibe.fullLyrics[lyricsIndex].text;
+            karaokeHighlight.classList.add("active");
+            lyricsIndex++;
         }
-    };
-    
-    showNextLyricLine();
-    lyricsInterval = setInterval(showNextLyricLine, 4000);
+        
+    }, 200); // Verifica a cada 200ms
 }
 
 document.getElementById("prevBtn").addEventListener("click", () => {
