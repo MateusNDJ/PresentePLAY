@@ -36,16 +36,16 @@ body, html {
 
 .center-panel {
     position: relative;
-    z-index: 1; /* painel atrás do karaoke e fotos */
-    width: 90%; /* Ajuste para ter mais espaço em telas menores */
+    z-index: 1;
+    width: 90%;
     max-width: 800px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    padding: 20px; /* Reduzi o padding para dar mais espaço */
+    padding: 20px;
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box; /* Garante que o padding não adicione largura extra */
+    box-sizing: border-box;
 }
 
 .center-panel h1 {
@@ -91,7 +91,7 @@ button.carousel-btn:hover {
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     animation: float 8s ease-in-out infinite alternate;
-    z-index: 2; /* below the karaoke */
+    z-index: 2;
     cursor: grab;
     border: 3px solid white;
 }
@@ -147,7 +147,7 @@ button.carousel-btn:hover {
 .emoji-loop {
     font-size: 1.5rem;
     margin-left: 10px;
-    width: 30px; /* Fixed width to prevent shifting */
+    width: 30px;
     text-align: left;
 }
 </style>
@@ -155,11 +155,11 @@ button.carousel-btn:hover {
 <body>
 
 <div class="stage">
-    <div class="special-title">
-        Para a garota mais incrível que eu conheci
-        <span id="emojiLoop" class="emoji-loop"></span>
-    </div>
     <div class="center-panel" id="panel">
+        <div class="special-title">
+            Para a garota mais incrível que eu conheci
+            <span id="emojiLoop" class="emoji-loop"></span>
+        </div>
         <h1 id="songTitle"></h1>
         <div id="ytPlayerContainer"></div>
         <div id="fullLyricsContainer"></div>
