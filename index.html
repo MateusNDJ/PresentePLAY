@@ -1,165 +1,166 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    
+    
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Playlist Romântica – Frank Ocean</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
-    --accent: #ff5277;
+    --accent: #ff5277;
 }
 
 body, html {
-    
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    font-family: 'Arial', sans-serif;
-    background-image: url('background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    position: relative;
-    overflow-x: hidden;
+    
+    margin: 0;
+    padding: 0;
+    min-height: 100%; /* Garante altura mínima para rolagem */
+    font-family: 'Arial', sans-serif;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
 }
 
 .stage {
-    position: relative;
-    width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 20px 0;
-    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    min-height: 100vh; /* Permite que o stage cresça se o conteúdo for maior */
+    display: flex;
+    justify-content: center;
+    /* align-items: center; Removido para permitir que o painel flutue livremente */
+    flex-direction: column;
+    padding: 20px 0; /* Adiciona padding vertical ao stage para dar espaço */
+    box-sizing: border-box;
 }
 
 .center-panel {
-    position: relative;
-    z-index: 1;
-    width: 90%;
-    max-width: 800px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    margin: 20px auto;
-    max-height: calc(100vh - 40px);
-    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    margin: 20px auto; /* Centraliza horizontalmente e adiciona margem superior/inferior */
+    max-height: calc(100vh - 40px); /* Limita a altura do painel para caber na tela com margens */
+    overflow-y: auto; /* Permite rolagem interna do painel se o conteúdo exceder */
 }
 
 .center-panel h1 {
-    color: #fff;
-    font-size: 2rem;
-    margin-bottom: 15px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 #fullLyricsContainer {
-    color: #fff;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 1rem;
-    line-height: 1.5;
-    overflow-y: visible;
-    padding-right: 15px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 15px;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+    /* max-height: 300px; agora a rolagem será controlada pelo center-panel */
+    overflow-y: visible; /* Garante que a rolagem do container pai funcione */
+    padding-right: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 15px;
 }
 
 button.carousel-btn {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
 }
 button.carousel-btn:hover {
-    background: #ff7899;
+    background: #ff7899;
 }
 
 /* Floating Photos */
 .photo-frame {
-    position: absolute;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    animation: float 8s ease-in-out infinite alternate;
-    z-index: 2;
-    cursor: grab;
-    border: 3px solid white;
+    position: absolute;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    animation: float 8s ease-in-out infinite alternate;
+    z-index: 2;
+    cursor: grab;
+    border: 3px solid white;
 }
 
 .photo-frame.dragging {
-    cursor: grabbing;
-    animation: none;
-    z-index: 3;
+    cursor: grabbing;
+    animation: none;
+    z-index: 3;
 }
 
 .photo-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 @keyframes float {
-    0% { transform: translateY(0px) rotate(0deg);}
-    50% { transform: translateY(-15px) rotate(5deg);}
-    100% { transform: translateY(0px) rotate(0deg);}
+    0% { transform: translateY(0px) rotate(0deg);}
+    50% { transform: translateY(-15px) rotate(5deg);}
+    100% { transform: translateY(0px) rotate(0deg);}
 }
 
 #ytPlayerContainer {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    margin-bottom: 20px;
-    border-radius: 16px;
-    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    overflow: hidden;
 }
 #ytPlayerContainer iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 /* New Title and Emoji styles */
 .special-title {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .emoji-loop {
-    font-size: 1.5rem;
-    margin-left: 10px;
-    width: 30px;
-    text-align: left;
+    font-size: 1.5rem;
+    margin-left: 10px;
+    width: 30px;
+    text-align: left;
 }
 </style>
 </head>
 <body>
-
-<div id="cmc-overlay" style="
+    <div id="cmc-overlay" style="
     position: fixed;
     top: 0;
     left: 0;
@@ -184,7 +185,7 @@ button.carousel-btn:hover {
         <p style="font-size: 1.2rem; margin-bottom: 20px;">
             ⚠️ Posso ser ausente, mas quero que saiba que eu me importo com você. ❤️
         </p>
-        <button id="cmc-yes-btn" style="
+        <button id="cmc-yes" style="
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -197,7 +198,7 @@ button.carousel-btn:hover {
         ">
             Sim, eu sei
         </button>
-        <button id="cmc-no-btn" style="
+        <button id="cmc-no" style="
             background-color: #f44336;
             color: white;
             border: none;
@@ -213,179 +214,180 @@ button.carousel-btn:hover {
     </div>
 </div>
 
-<div class="stage">
-    <div class="center-panel" id="panel">
-        <div class="special-title">
-            Para a garota mais incrível que eu conheci
-            <span id="emojiLoop" class="emoji-loop"></span>
-        </div>
-        <h1 id="songTitle"></h1>
-        <div id="ytPlayerContainer"></div>
-        <div id="fullLyricsContainer"></div>
-        <button class="carousel-btn" id="prevBtn">Anterior</button>
-        <button class="carousel-btn" id="nextBtn">Próxima</button>
-    </div>
+<script>
+    document.getElementById('cmc-yes').addEventListener('click', function() {
+        document.getElementById('cmc-overlay').style.display = 'none';
+    });
+    // O botão 'Não' não fará nada, conforme sua solicitação.
+</script>
 
-    <div class="photo-frame" style="top:10%; left:5%; width:120px; height:120px;"><img src="img/1.png"></div>
-    <div class="photo-frame" style="top:25%; left:15%; width:140px; height:140px;"><img src="img/2.png"></div>
-    <div class="photo-frame" style="top:5%; right:10%; width:130px; height:130px;"><img src="img/3.png"></div>
-    <div class="photo-frame" style="top:30%; right:5%; width:110px; height:110px;"><img src="img/4.png"></div>
-    <div class="photo-frame" style="bottom:10%; left:5%; width:100px; height:100px; transform: rotate(10deg);"><img src="img/5.png"></div>
-    <div class="photo-frame" style="bottom:25%; left:18%; width:150px; height:150px; transform: rotate(-5deg);"><img src="img/6.png"></div>
-    <div class="photo-frame" style="bottom:5%; right:15%; width:120px; height:120px; transform: rotate(15deg);"><img src="img/7.png"></div>
-    <div class="photo-frame" style="bottom:20%; right:5%; width:140px; height:140px; transform: rotate(-10deg);"><img src="img/8.png"></div>
-    <div class="photo-frame" style="top:40%; left:4%; width:110px; height:110px; transform: rotate(20deg);"><img src="img/9.png"></div>
-    <div class="photo-frame" style="top:55%; right:4%; width:130px; height:130px; transform: rotate(-15deg);"><img src="img/10.png"></div>
+<div class="stage">
+    <div class="center-panel" id="panel">
+        <div class="special-title">
+            Para a garota mais incrível que eu conheci
+            <span id="emojiLoop" class="emoji-loop"></span>
+        </div>
+        <h1 id="songTitle"></h1>
+        <div id="ytPlayerContainer"></div>
+        <div id="fullLyricsContainer"></div>
+        <button class="carousel-btn" id="prevBtn">Anterior</button>
+        <button class="carousel-btn" id="nextBtn">Próxima</button>
+    </div>
+
+    <div class="photo-frame" style="top:10%; left:5%; width:120px; height:120px;"><img src="img/1.png"></div>
+    <div class="photo-frame" style="top:25%; left:15%; width:140px; height:140px;"><img src="img/2.png"></div>
+    <div class="photo-frame" style="top:5%; right:10%; width:130px; height:130px;"><img src="img/3.png"></div>
+    <div class="photo-frame" style="top:30%; right:5%; width:110px; height:110px;"><img src="img/4.png"></div>
+    <div class="photo-frame" style="bottom:10%; left:5%; width:100px; height:100px; transform: rotate(10deg);"><img src="img/5.png"></div>
+    <div class="photo-frame" style="bottom:25%; left:18%; width:150px; height:150px; transform: rotate(-5deg);"><img src="img/6.png"></div>
+    <div class="photo-frame" style="bottom:5%; right:15%; width:120px; height:120px; transform: rotate(15deg);"><img src="img/7.png"></div>
+    <div class="photo-frame" style="bottom:20%; right:5%; width:140px; height:140px; transform: rotate(-10deg);"><img src="img/8.png"></div>
+    <div class="photo-frame" style="top:40%; left:4%; width:110px; height:110px; transform: rotate(20deg);"><img src="img/9.png"></div>
+    <div class="photo-frame" style="top:55%; right:4%; width:130px; height:130px; transform: rotate(-15deg);"><img src="img/10.png"></div>
 </div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-// Lógica para esconder o aviso
-document.getElementById('cmc-yes-btn').addEventListener('click', function() {
-    document.getElementById('cmc-overlay').style.display = 'none';
-});
-
-// Lógica da Playlist
 const vibes = [
-    {
-        title: "Thinkin Bout You",
-        videoId: "RgsZvjENnm0",
-        fullLyrics: [
-            "A tornado flew around my room before you came",
-            "Excuse the mess it made, it usually doesn't rain",
-            "In Southern California, much like Arizona",
-            "My eyes don't shed tears, but, boy,",
-            "they pour when I'm thinkin' 'bout you",
-            "",
-            "(Ooh, no, no, no)",
-            "I've been thinkin' 'bout you (You know, know, know)",
-            "I've been thinkin' 'bout you",
-            "Do you think about me still? Do ya, do ya?",
-            "",
-            "Or do you not think so far ahead?",
-            "'Cause I been thinkin' 'bout forever (Oooh, oooh)",
-            "",
-            "No, I don't like you,",
-            "I just thought you were cool enough to kick it",
-            "Got a beach house I could sell you in Idaho",
-            "Since you think I don't love you,",
-            "I just thought you were cute",
-            "That's why I kiss you",
-            "Got a fighter jet, I don't get to fly it, though",
-            "",
-            "I'm lyin' down thinkin' 'bout you",
-            "(Ooh, no, no, no)",
-            "I've been thinkin' 'bout you",
-            "(You know, know, know)",
-            "I've been thinkin' 'bout you",
-            "Do you think about me still? Do ya, do ya?",
-            "",
-            "Or do you not think so far ahead? (Ahead)",
-            "'Cause I been thinkin' 'bout forever (Oooh, oooh)",
-            "",
-            "Yes, of course",
-            "I remember, how could I forget?",
-            "How you feel?",
-            "And though you were my first time",
-            "A new feel",
-            "It won't ever get old, not in my soul",
-            "Not in my spirit, keep it alive",
-            "We'll go down this road",
-            "'Til it turns from color to black and white",
-            "",
-            "Or do you not think so far ahead? (Ahead)",
-            "'Cause I been thinkin' 'bout forever (Oooh, oooh)"
-        ]
-    },
-    {
-        title: "Pink + White",
-        videoId: "uzS3WG6__G4",
-        fullLyrics: [
-            "Yeah, yeah, uh (woo!)",
-            "Yeah, yeah, yeah",
-            "",
-            "That's the way every day goes",
-            "Every time we've no control",
-            "If the sky is pink and white",
-            "If the ground is black and yellow",
-            "It's the same way you showed me",
-            "Nod my head, don't close my eyes",
-            "Halfway on a slow move",
-            "It's the same way you showed me",
-            "If you could fly, then you'd feel south",
-            "Up north's getting cold soon",
-            "The way it is, we're on land",
-            "Still I'm someone to hold true",
-            "Keep you cool when it's still alive",
-            "Won't let you down when it's all ruin",
-            "",
-            "Just the same way you showed me, showed me",
-            "You showed me love",
-            "Glory from above",
-            "Regard, my dear",
-            "It's all downhill from here",
-            "",
-            "In the wake of a hurricane",
-            "Dark skin of a summer shade",
-            "Nosedive into flood lines",
-            "Tall tower of milk crates",
-            "It's the same way you showed me",
-            "Cannonball off the porch side",
-            "Older kids trying off the roof",
-            "Just the same way you showed me (You showed)",
-            "If you could die and come back to life",
-            "Up for air from the swimming pool",
-            "You'd kneel down to the dry land",
-            "Kiss the Earth that birthed you",
-            "Gave you tools just to stay alive",
-            "And make it out when the sun is ruined",
-            "",
-            "That's the same way you showed me, showed me",
-            "You showed me love",
-            "Glory from above",
-            "Regard, my dear",
-            "It's all downhill from here",
-            "",
-            "Remember life, remember how it was",
-            "Climb trees, Michael Jackson, it all ends here",
-            "Say what up to Matthew, to Shoob",
-            "Say what up to Danny",
-            "Say what up to life immortality",
-            "Bending up my Nikes",
-            "Running out the Melpomene, nicotine",
-            "Stealing granny cigs (Take it easy)",
-            "Gimme something sweet",
-            "Bitch, I might like immortality",
-            "This is life, life immortality"
-        ]
-    },
-    {
-        title: "Godspeed",
-        videoId: "P18g4rKns6Q",
-        fullLyrics: [
-            "I will always love you",
-            "How I do",
-            "Let go of a prayer for you",
-            "Just a sweet word",
-            "The table is prepared for you",
-            "Wishing you godspeed, glory",
-            "There will be mountains you won't move",
-            "Still, I'll always be there for you",
-            "How I do",
-            "I let go of my claim on you, it's a free world",
-            "You look down on where you came from sometimes",
-            "But you'll have this place to call home, always",
-            "This love will keep us through blinding of the eyes (oh)",
-            "Silence in the ears, darkness of the mind (until it's time)",
-            "This love will keep us through blinding of the eyes (oh, oh-oh)",
-            "Silence in the ears, darkness of the mind (oh, oh-oh, oh)",
-            "This love will keep us through blinding of the eyes (oh, until it's time we die)",
-            "Silence in the ears, darkness of the mind",
-            "Hmm-oh-oh, oh, oh-oh",
-            "I'll always love you until the time we die",
-            "Oh-oh, hmm"
-        ]
-    }
+    {
+        title: "Thinkin Bout You",
+        videoId: "RgsZvjENnm0",
+        fullLyrics: [
+            "A tornado flew around my room before you came",
+            "Excuse the mess it made, it usually doesn't rain",
+            "In Southern California, much like Arizona",
+            "My eyes don't shed tears, but, boy,",
+            "they pour when I'm thinkin' 'bout you",
+            "",
+            "(Ooh, no, no, no)",
+            "I've been thinkin' 'bout you (You know, know, know)",
+            "I've been thinkin' 'bout you",
+            "Do you think about me still? Do ya, do ya?",
+            "",
+            "Or do you not think so far ahead?",
+            "'Cause I been thinkin' 'bout forever (Oooh, oooh)",
+            "",
+            "No, I don't like you,",
+            "I just thought you were cool enough to kick it",
+            "Got a beach house I could sell you in Idaho",
+            "Since you think I don't love you,",
+            "I just thought you were cute",
+            "That's why I kiss you",
+            "Got a fighter jet, I don't get to fly it, though",
+            "",
+            "I'm lyin' down thinkin' 'bout you",
+            "(Ooh, no, no, no)",
+            "I've been thinkin' 'bout you",
+            "(You know, know, know)",
+            "I've been thinkin' 'bout you",
+            "Do you think about me still? Do ya, do ya?",
+            "",
+            "Or do you not think so far ahead? (Ahead)",
+            "'Cause I been thinkin' 'bout forever (Oooh, oooh)",
+            "",
+            "Yes, of course",
+            "I remember, how could I forget?",
+            "How you feel?",
+            "And though you were my first time",
+            "A new feel",
+            "It won't ever get old, not in my soul",
+            "Not in my spirit, keep it alive",
+            "We'll go down this road",
+            "'Til it turns from color to black and white",
+            "",
+            "Or do you not think so far ahead? (Ahead)",
+            "'Cause I been thinkin' 'bout forever (Oooh, oooh)"
+        ]
+    },
+    {
+        title: "Pink + White",
+        videoId: "uzS3WG6__G4",
+        fullLyrics: [
+            "Yeah, yeah, uh (woo!)",
+            "Yeah, yeah, yeah",
+            "",
+            "That's the way every day goes",
+            "Every time we've no control",
+            "If the sky is pink and white",
+            "If the ground is black and yellow",
+            "It's the same way you showed me",
+            "Nod my head, don't close my eyes",
+            "Halfway on a slow move",
+            "It's the same way you showed me",
+            "If you could fly, then you'd feel south",
+            "Up north's getting cold soon",
+            "The way it is, we're on land",
+            "Still I'm someone to hold true",
+            "Keep you cool when it's still alive",
+            "Won't let you down when it's all ruin",
+            "",
+            "Just the same way you showed me, showed me",
+            "You showed me love",
+            "Glory from above",
+            "Regard, my dear",
+            "It's all downhill from here",
+            "",
+            "In the wake of a hurricane",
+            "Dark skin of a summer shade",
+            "Nosedive into flood lines",
+            "Tall tower of milk crates",
+            "It's the same way you showed me",
+            "Cannonball off the porch side",
+            "Older kids trying off the roof",
+            "Just the same way you showed me (You showed)",
+            "If you could die and come back to life",
+            "Up for air from the swimming pool",
+            "You'd kneel down to the dry land",
+            "Kiss the Earth that birthed you",
+            "Gave you tools just to stay alive",
+            "And make it out when the sun is ruined",
+            "",
+            "That's the same way you showed me, showed me",
+            "You showed me love",
+            "Glory from above",
+            "Regard, my dear",
+            "It's all downhill from here",
+            "",
+            "Remember life, remember how it was",
+            "Climb trees, Michael Jackson, it all ends here",
+            "Say what up to Matthew, to Shoob",
+            "Say what up to Danny",
+            "Say what up to life immortality",
+            "Bending up my Nikes",
+            "Running out the Melpomene, nicotine",
+            "Stealing granny cigs (Take it easy)",
+            "Gimme something sweet",
+            "Bitch, I might like immortality",
+            "This is life, life immortality"
+        ]
+    },
+    {
+        title: "Godspeed",
+        videoId: "P18g4rKns6Q",
+        fullLyrics: [
+            "I will always love you",
+            "How I do",
+            "Let go of a prayer for you",
+            "Just a sweet word",
+            "The table is prepared for you",
+            "Wishing you godspeed, glory",
+            "There will be mountains you won't move",
+            "Still, I'll always be there for you",
+            "How I do",
+            "I let go of my claim on you, it's a free world",
+            "You look down on where you came from sometimes",
+            "But you'll have this place to call home, always",
+            "This love will keep us through blinding of the eyes (oh)",
+            "Silence in the ears, darkness of the mind (until it's time)",
+            "This love will keep us through blinding of the eyes (oh, oh-oh)",
+            "Silence in the ears, darkness of the mind (oh, oh-oh, oh)",
+            "This love will keep us through blinding of the eyes (oh, until it's time we die)",
+            "Silence in the ears, darkness of the mind",
+            "Hmm-oh-oh, oh, oh-oh",
+            "I'll always love you until the time we die",
+            "Oh-oh, hmm"
+        ]
+    }
 ];
 
 let current = 0;
@@ -396,59 +398,59 @@ const songTitle = document.getElementById("songTitle");
 const fullLyricsContainer = document.getElementById("fullLyricsContainer");
 
 function onYouTubeIframeAPIReady() {
-    loadVibe(0);
+    loadVibe(0);
 }
 
 function loadVibe(index) {
-    current = (index + vibes.length) % vibes.length;
-    const vibe = vibes[current];
-    songTitle.textContent = vibe.title;
+    current = (index + vibes.length) % vibes.length;
+    const vibe = vibes[current];
+    songTitle.textContent = vibe.title;
 
-    fullLyricsContainer.innerHTML = '';
-    clearInterval(lyricsInterval);
-    
-    if (player) {
-        player.destroy();
-    }
-    
-    player = new YT.Player('ytPlayerContainer', {
-        videoId: vibe.videoId,
-        playerVars: {
-            'controls': 1
-        },
-        events: {
-            'onStateChange': onPlayerStateChange
-        }
-    });
+    fullLyricsContainer.innerHTML = '';
+    clearInterval(lyricsInterval);
+    
+    if (player) {
+        player.destroy();
+    }
+    
+    player = new YT.Player('ytPlayerContainer', {
+        videoId: vibe.videoId,
+        playerVars: {
+            'controls': 1
+        },
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
+    });
 }
 
 function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.PLAYING) {
-        startDisplayingLyrics();
-    } else {
-        clearInterval(lyricsInterval);
-    }
+    if (event.data === YT.PlayerState.PLAYING) {
+        startDisplayingLyrics();
+    } else {
+        clearInterval(lyricsInterval);
+    }
 }
 
 function startDisplayingLyrics() {
-    const vibe = vibes[current];
-    fullLyricsContainer.innerHTML = '';
-    
-    clearInterval(lyricsInterval);
+    const vibe = vibes[current];
+    fullLyricsContainer.innerHTML = '';
+    
+    clearInterval(lyricsInterval);
 
-    let lineIndex = 0;
-    
-    const displayNextLine = () => {
-        if (lineIndex < vibe.fullLyrics.length) {
-            const line = document.createElement('p');
-            line.textContent = vibe.fullLyrics[lineIndex];
-            fullLyricsContainer.appendChild(line);
-            fullLyricsContainer.scrollTop = fullLyricsContainer.scrollHeight;
-            lineIndex++;
-        }
-    };
-    
-    lyricsInterval = setInterval(displayNextLine, 3000);
+    let lineIndex = 0;
+    
+    const displayNextLine = () => {
+        if (lineIndex < vibe.fullLyrics.length) {
+            const line = document.createElement('p');
+            line.textContent = vibe.fullLyrics[lineIndex];
+            fullLyricsContainer.appendChild(line);
+            fullLyricsContainer.scrollTop = fullLyricsContainer.scrollHeight;
+            lineIndex++;
+        }
+    };
+    
+    lyricsInterval = setInterval(displayNextLine, 3000);
 }
 
 document.getElementById("prevBtn").addEventListener("click", () => loadVibe(current - 1));
@@ -459,8 +461,8 @@ const emojis = ["❤️", "✨", "🥰", "🌹"];
 let emojiIndex = 0;
 
 setInterval(() => {
-    emojiElement.textContent = emojis[emojiIndex];
-    emojiIndex = (emojiIndex + 1) % emojis.length;
+    emojiElement.textContent = emojis[emojiIndex];
+    emojiIndex = (emojiIndex + 1) % emojis.length;
 }, 1000);
 </script>
 </body>
